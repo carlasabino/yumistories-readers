@@ -1,210 +1,45 @@
-21<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Fight For Me – Reader</title>
-  <style>
-    :root { --bg:#0f1115; --fg:#f2f2f2; --muted:#98a2b3; --zoom:1; }
-    *{box-sizing:border-box}
-    body{
-      margin:0;background:var(--bg);color:var(--fg);
-      font:15px/1.6 system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial
-    }
-    .bar{
-      position:sticky;top:0;z-index:10;display:flex;align-items:center;gap:.5rem;
-      padding:.6rem .8rem;background:#151821cc;backdrop-filter:blur(8px);
-      border-bottom:1px solid #232836
-    }
-    .title{font-weight:700;letter-spacing:.3px;margin-right:auto}
-    .btn,.num{
-      background:#1a1f2b;color:var(--fg);border:1px solid #2a3142;
-      border-radius:10px;padding:.45rem .7rem;font:inherit;cursor:pointer
-    }
-    .btn:active{transform:translateY(1px)}
-    .num{width:5.2rem;text-align:center}
-    .wrap{max-width:1000px;margin:0 auto;padding:1rem .8rem 3rem}
-    .page{
-      position:relative;margin:0 auto 1.1rem;transform:scale(var(--zoom));
-      transform-origin:top center;transition:transform .15s ease;
-      min-height:60vh; /* placeholder so IO triggers */
-    }
-    .page img{
-      width:100%;height:auto;display:block;border-radius:8px;
-      background:#0c0f14;box-shadow:0 10px 30px rgba(0,0,0,.35)
-    }
-    .page .tag{
-      position:absolute;right:10px;bottom:10px;background:rgba(0,0,0,.55);
-      color:#fff;font-size:12px;padding:.15rem .4rem;border-radius:6px
-    }
-    .muted{color:var(--muted)}
-    .sep{width:1px;height:28px;background:#2a3142;margin:0 .4rem}
-    .hide{display:none!important}
-    .light{ --bg:#ffffff; --fg:#101418; --muted:#4b5563 }
-  </style>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>The Book Keeper Shelf — YumiStories</title>
+<style>
+  :root{--bg:#faf7f3;--ink:#2b2118;--muted:#6b5e52;--card:#fff;--shadow:rgba(0,0,0,.12)}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 Georgia,serif;text-align:center}
+  h1{font-size:2.4rem;margin:2rem 0 .4rem}
+  .subtitle{margin:0 0 2rem;color:var(--muted)}
+  .section{max-width:1100px;margin:0 auto 3rem;padding:0 1rem}
+  .section h2{font-size:.9rem;letter-spacing:.16em;text-transform:uppercase;color:#a88865;margin:0 0 1rem}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1.4rem;justify-items:center}
+
+  .book{display:flex;flex-direction:column;align-items:center;text-decoration:none;color:var(--ink);
+        background:var(--card);border-radius:14px;box-shadow:0 6px 22px var(--shadow);overflow:hidden;width:100%;max-width:240px;
+        transition:transform .2s ease, box-shadow .2s ease}
+  .book:hover{transform:translateY(-4px);box-shadow:0 12px 30px rgba(0,0,0,.18)}
+  .cover{width:100%;aspect-ratio:2/3;object-fit:cover;background:#efeae2;display:block}
+  .book h3{margin:.7rem 0 1rem;font-size:1rem;font-weight:700}
+  footer{margin:3rem 0 2rem;color:#998c80;font-size:.85rem}
+</style>
 </head>
 <body>
-  <div class="bar" role="toolbar" aria-label="Reader controls">
-    <div class="title">Fight For Me</div>
-    <button class="btn" id="prev" aria-label="Previous page">← Prev</button>
-    <label class="muted" for="go">Page</label>
-    <input class="num" id="go" type="number" min="1" value="1" inputmode="numeric">
-    <span class="muted">/ <span id="total">—</span></span>
-    <button class="btn" id="next" aria-label="Next page">Next →</button>
-    <div class="sep" aria-hidden="true"></div>
-    <button class="btn" id="fit" aria-label="Fit to width">Fit</button>
-    <button class="btn" id="zin" aria-label="Zoom in">+</button>
-    <button class="btn" id="zout" aria-label="Zoom out">−</button>
-    <button class="btn" id="mode" aria-label="Toggle light/dark">🌙/☀️</button>
-  </div>
+  <h1>📚 The Book Keeper Shelf</h1>
+  <p class="subtitle">Wander through stories that were never meant to be shared — until now.</p>
 
-  <div id="pages" class="wrap" aria-live="polite"></div>
+  <!-- ====================== FOR ME SERIES ====================== -->
+  <section class="section">
+    <h2>FOR ME SERIES</h2>
+    <div class="grid">
+      <!-- Fight For Me card -->
+      <a class="book" href="/for-me-fight-for-me/">
+        <img class="cover" src="/for-me-fight-for-me/FFM.jpg" alt="Fight For Me cover"
+             onerror="this.src='data:image/svg+xml;utf8,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 600 900%22&gt;&lt;rect width=%22100%25%22 height=%22100%25%22 fill=%23efeae2/&gt;&lt;text x=%2250%25%22 y=%2250%25%22 dominant-baseline=%22middle%22 text-anchor=%22middle%22 fill=%239a8d7f%22 font-size=%2240%22 font-family=%27Georgia%27&gt;Cover missing (FFM.jpg)&lt;/text&gt;&lt;/svg&gt;'">
+        <h3>Fight For Me</h3>
+      </a>
+    </div>
+  </section>
 
-  <script>
-  (function(){
-    // === CONFIG (tugma sa screenshot mo) ===
-    const DIR = "images/";        // folder (case-sensitive sa Netlify)
-    const TOTAL = 246;              // FFM + FFM_001..FFM_234  => 246 pages
-    const TITLE_PREFIX = "FFM";  // filenames base
-
-    // update UI total
-    document.getElementById("total").textContent = TOTAL;
-
-    // Build pages
-    const pagesEl = document.getElementById("pages");
-    for (let i = 1; i <= TOTAL; i++) {
-      const p = document.createElement("div");
-      p.className = "page";
-      p.dataset.page = i;
-
-      // No zero padding: CH23.jpg, CH23_1.jpg, CH23_2.jpg, ...
-      const filename = (i === 1)
-        ? `${TITLE_PREFIX}.jpg`
-        : `${TITLE_PREFIX}_${i - 1}.jpg`;
-
-      const img = document.createElement("img");
-      img.alt = `Fight For Me – Page ${i}`;
-      img.loading = "lazy";
-      img.decoding = "async";
-      img.dataset.src = DIR + filename;
-      img.onerror = () => p.classList.add("hide");
-
-      const tag = document.createElement("div");
-      tag.className = "tag";
-      tag.textContent = i;
-
-      p.appendChild(img);
-      p.appendChild(tag);
-      pagesEl.appendChild(p);
-    }
-
-    // Lazy-load (observe IMG directly so page 2 shows)
-    const io = new IntersectionObserver(entries => {
-      entries.forEach(e => {
-        const img = e.target;
-        if (e.isIntersecting && img && !img.src) {
-          img.src = img.dataset.src;
-          io.unobserve(img);
-        }
-      });
-    }, { rootMargin: "800px 0px" });
-
-    document.querySelectorAll(".page img").forEach(img => io.observe(img));
-
-    // State + helpers
-    let current = 1, zoom = 1;
-    const clamp = (n, a, b) => Math.max(a, Math.min(b, n));
-    const go = document.getElementById("go");
-
-    function setZoom(z) {
-      zoom = clamp(z, 0.6, 2.5);
-      document.documentElement.style.setProperty("--zoom", zoom);
-    }
-
-    function scrollToPage(n, smooth=true) {
-      current = clamp(n, 1, TOTAL);
-      go.value = current;
-      const el = document.querySelector(`.page[data-page="${current}"]`);
-      if (el) window.scrollTo({ top: el.offsetTop - 70, behavior: smooth ? "smooth" : "auto" });
-      const url = new URL(location);
-      url.searchParams.set("p", current);
-      history.replaceState(null, "", url);
-    }
-
-    // Controls
-    document.getElementById("prev").onclick = () => scrollToPage(current - 1);
-    document.getElementById("next").onclick = () => scrollToPage(current + 1);
-    document.getElementById("zin").onclick  = () => setZoom(zoom + 0.15);
-    document.getElementById("zout").onclick = () => setZoom(zoom - 0.15);
-
-    document.getElementById("fit").onclick = () => {
-      const firstImg = document.querySelector(".page img");
-      const doFit = () => {
-        const w = firstImg.naturalWidth || firstImg.getBoundingClientRect().width;
-        if (!w) return setZoom(1);
-        setZoom(pagesEl.clientWidth / w);
-      };
-      if (firstImg.complete && firstImg.naturalWidth) doFit();
-      else {
-        if (!firstImg.src) firstImg.src = firstImg.dataset.src;
-        firstImg.addEventListener("load", doFit, { once:true });
-      }
-    };
-
-    document.getElementById("mode").onclick = () =>
-      document.body.classList.toggle("light");
-
-    go.onchange = () => scrollToPage(parseInt(go.value || "1", 10));
-
-    // Update current page while scrolling
-    const spy = new IntersectionObserver(es => {
-      es.forEach(e => {
-        if (e.isIntersecting) {
-          current = parseInt(e.target.parentElement.dataset.page, 10);
-          go.value = current;
-        }
-      });
-    }, { rootMargin: "-40% 0px -55% 0px" });
-    document.querySelectorAll(".page img").forEach(img => spy.observe(img));
-
-    // Keyboard shortcuts
-    window.addEventListener("keydown", e => {
-      if (e.key === "ArrowLeft")  scrollToPage(current - 1);
-      if (e.key === "ArrowRight") scrollToPage(current + 1);
-      if (e.key === "+")          setZoom(zoom + 0.15);
-      if (e.key === "-")          setZoom(zoom - 0.15);
-      if (e.key.toLowerCase() === "f") document.getElementById("fit").click();
-    });
-
-    // Init from URL ?p=#
-    const startP = clamp(parseInt(new URLSearchParams(location.search).get("p") || "1", 10), 1, TOTAL);
-    go.value = startP;
-    setZoom(1);
-
-    // Pre-warm page 1 & 2 para siguradong visible agad
-    const first = document.querySelector('.page[data-page="1"] img');
-    if (first && !first.src) first.src = first.dataset.src;
-    const second = document.querySelector('.page[data-page="2"] img');
-    if (second && !second.src) second.src = second.dataset.src;
-
-    scrollToPage(startP, false);
-
-    // Soft protections
-    document.addEventListener('contextmenu', e => e.preventDefault(), { capture:true });
-    document.addEventListener('dragstart', e => { if (e.target.tagName === 'IMG') e.preventDefault(); }, { capture:true });
-    document.addEventListener('selectstart', e => e.preventDefault(), { capture:true });
-    document.addEventListener('keydown', e => {
-      const k = e.key.toLowerCase();
-      if ((e.ctrlKey || e.metaKey) && ['s','u','p'].includes(k)) { e.preventDefault(); e.stopPropagation(); }
-      if ((e.ctrlKey || e.metaKey) && e.shiftKey && ['i','j','c'].includes(k)) { e.preventDefault(); e.stopPropagation(); }
-    }, true);
-  })();
-  </script>
-
-  <style>
-    html, body, img, .page { -webkit-user-select:none; user-select:none; -webkit-touch-callout:none; }
-    img { pointer-events:none; }
-  </style>
+  <footer>Made with 🖤 for <strong>YumiStories.com</strong></footer>
 </body>
 </html>
-
