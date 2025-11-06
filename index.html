@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>The Book Keeper Shelf</title>
+<style>
+  :root{
+    --bg:#faf7f3; --ink:#2b2118; --muted:#6b5e52; --card:#fff; --shadow:rgba(0,0,0,.12);
+  }
+  body{margin:0;font-family:Georgia,serif;background:var(--bg);color:var(--ink);text-align:center}
+  h1{font-size:2.6rem;margin:2rem 0 .25rem}
+  .subtitle{margin:0 0 2.25rem;color:var(--muted)}
+  .section{max-width:1100px;margin:0 auto 3rem;padding:0 1rem}
+  .section h2{font-size:1rem;letter-spacing:.16em;text-transform:uppercase;color:#a88865;margin:0 0 1rem}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1.6rem;justify-items:center}
+  .book{display:flex;flex-direction:column;align-items:center;text-decoration:none;color:var(--ink);
+        background:var(--card);border-radius:14px;box-shadow:0 6px 22px var(--shadow);overflow:hidden;width:100%;max-width:230px;
+        transition:transform .2s ease, box-shadow .2s ease}
+  .book:hover{transform:translateY(-4px);box-shadow:0 12px 30px rgba(0,0,0,.18)}
+  /* Maintain aspect ratio even if image fails */
+  .cover{width:100%;aspect-ratio:2/3;display:block;object-fit:cover;background:#f0ece6}
+  .cover[alt][data-missing="1"]{background:linear-gradient(135deg,#eee,#e6e0d8);color:#9a8d7f;display:grid;place-items:center;font-size:.9rem}
+  .book h3{margin:.75rem 0 1rem;font-size:1rem;font-weight:700}
+  footer{margin:3rem 0 2rem;color:#998c80;font-size:.85rem}
+</style>
+</head>
+<body>
+  <h1>📚 The Book Keeper Shelf</h1>
+  <p class="subtitle">Wander through stories that were never meant to be shared — until now.</p>
+
+  <!-- ====================== FOR ME SERIES ====================== -->
+  <section class="section">
+    <h2>For Me Series</h2>
+    <div class="grid">
+
+      <!-- Fight For Me (LOCAL preview links) -->
+      <a href="../for-me-fight-for-me/index.html" class="book">
+        <!-- IMPORTANT: match the exact filename case (FFM.jpg or ffm.jpg) -->
+        <img src="../for-me-fight-for-me/FFM.jpg" alt="Fight For Me" class="cover"
+             onerror="this.dataset.missing=1; this.removeAttribute('src'); this.textContent='Cover missing (check filename)';">
+        <h3>Fight For Me</h3>
+      </a>
+	<a href="../for-me-stay-for-me/index.html" class="book">
+        <!-- IMPORTANT: match the exact filename case (FFM.jpg or ffm.jpg) -->
+        <img src="../for-me-stay-for-me/SFM.jpg" alt="Stay For Me" class="cover"
+             onerror="this.dataset.missing=1; this.removeAttribute('src'); this.textContent='Cover missing (check filename)';">
+        <h3>Stay For Me</h3>
+      </a>
+
+
+      <!-- Duplicate this block for the next books, then update href/src/title -->
+      <!--
+      <a href="../stay-for-me/index.html" class="book">
+        <img src="../stay-for-me/SFM.jpg" alt="Stay For Me" class="cover"
+             onerror="this.dataset.missing=1; this.removeAttribute('src'); this.textContent='Cover missing (check filename)';">
+        <h3>Stay For Me</h3>
+      </a>
+      -->
+
+    </div>
+  </section>
+
+  <!-- You can add more sections for other series
+  <section class="section">
+    <h2>Royal Series</h2>
+    <div class="grid"> ... </div>
+  </section>
+  -->
+
+  <footer>Made with 🖤 for <strong>YumiStories.com</strong></footer>
+
+<script>
+/* Hybrid path fixer: works on file:// (local) and https:// (Netlify)
+   Rule: Write paths as if from site root (start with "/...").
+   When local (file://), we auto-prepend "../" because library/ sits beside book folders.
+*/
+(function(){
+  const isFile = location.protocol === 'file:';
+  const adjust = p => {
+    if (!p) return p;
+    if (p.startsWith('/')) p = p.slice(1); // remove leading slash
+    return isFile ? ('../' + p) : ('/' + p); // local: ../..., live: /...
+  };
+
+  // Fix links
+  document.querySelectorAll('[data-href]').forEach(a=>{
+    a.href = adjust(a.getAttribute('data-href'));
+  });
+
+  // Fix images
+  document.querySelectorAll('img[data-src]').forEach(img=>{
+    img.src = adjust(img.getAttribute('data-src'));
+  });
+})();
+</script>
+</body>
+</html>
