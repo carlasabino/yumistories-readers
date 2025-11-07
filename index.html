@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
 <meta charset="utf-8" />
@@ -8,35 +8,41 @@
   :root{--bg:#faf7f3;--ink:#2b2118;--muted:#6b5e52;--card:#fff;--shadow:rgba(0,0,0,.12)}
   *{box-sizing:border-box}
   body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 Georgia,serif;text-align:center}
-  h1{font-size:2.4rem;margin:2rem 0 .4rem}
-  .subtitle{margin:0 0 2rem;color:var(--muted)}
-  .section{max-width:1100px;margin:0 auto 3rem;padding:0 1rem}
+  h1{font-size:2.2rem;margin:1.6rem 0 .4rem}
+  .subtitle{margin:0 0 1.6rem;color:var(--muted)}
+  .section{max-width:1100px;margin:0 auto 2.4rem;padding:0 1rem}
   .section h2{font-size:.9rem;letter-spacing:.16em;text-transform:uppercase;color:#a88865;margin:0 0 1rem}
-  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1.4rem;justify-items:center}
 
-  .book{display:flex;flex-direction:column;align-items:center;text-decoration:none;color:var(--ink);
-        background:var(--card);border-radius:14px;box-shadow:0 6px 22px var(--shadow);overflow:hidden;width:100%;max-width:240px;
-        transition:transform .2s ease, box-shadow .2s ease}
+  /* Grid of books */
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+        gap:1.2rem;justify-items:center}
+
+  /* Book card */
+  .book{width:100%;max-width:200px;background:var(--card);border-radius:14px;
+        box-shadow:0 6px 22px var(--shadow);overflow:hidden;text-decoration:none;color:var(--ink);
+        transition:transform .18s ease, box-shadow .18s ease; display:block}
   .book:hover{transform:translateY(-4px);box-shadow:0 12px 30px rgba(0,0,0,.18)}
-  .cover{width:100%;aspect-ratio:2/3;object-fit:cover;background:#efeae2;display:block}
-  .book h3{margin:.7rem 0 1rem;font-size:1rem;font-weight:700}
-  footer{margin:3rem 0 2rem;color:#998c80;font-size:.85rem}
+
+  /* Cover: always 2:3 and contained */
+  .cover{display:block;width:100%;aspect-ratio:2/3;object-fit:cover;background:#efeae2}
+  .book h3{margin:.6rem 0 1rem;font-size:.98rem;font-weight:700}
+  footer{margin:2.4rem 0 1.2rem;color:#998c80;font-size:.85rem}
 </style>
 </head>
 <body>
   <h1>📚 The Book Keeper Shelf</h1>
   <p class="subtitle">Wander through stories that were never meant to be shared — until now.</p>
 
-  <!-- ====================== FOR ME SERIES ====================== -->
+  <!-- FOR ME SERIES -->
   <section class="section">
-    <h2>FOR ME SERIES</h2>
+    <h2>For Me Series</h2>
     <div class="grid">
-      <!-- Fight For Me card -->
+      <!-- Fight For Me -->
       <a class="book" href="/for-me-fight-for-me/">
-        <img class="cover" src="/for-me-fight-for-me/FFM.jpg" alt="Fight For Me cover"
-             onerror="this.src='data:image/svg+xml;utf8,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 600 900%22&gt;&lt;rect width=%22100%25%22 height=%22100%25%22 fill=%23efeae2/&gt;&lt;text x=%2250%25%22 y=%2250%25%22 dominant-baseline=%22middle%22 text-anchor=%22middle%22 fill=%239a8d7f%22 font-size=%2240%22 font-family=%27Georgia%27&gt;Cover missing (FFM.jpg)&lt;/text&gt;&lt;/svg&gt;'">
+        <img class="cover" src="/for-me-fight-for-me/FFM.jpg" alt="Fight For Me" loading="lazy" width="400" height="600">
         <h3>Fight For Me</h3>
       </a>
+      <!-- Add more books by duplicating the block above -->
     </div>
   </section>
 
