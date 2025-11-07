@@ -1,9 +1,25 @@
-21<!doctype html>
+<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Fight For Me – Reader</title>
+
+  <!-- ✅ VIP guard: allow reader.yumistories.com and yumistories.com -->
+  <script>
+    (function () {
+      var ALLOW = ['reader.yumistories.com','yumistories.com'];
+      var ref = document.referrer || '';
+      var host = location.hostname;
+      var same = ref && new URL(ref).hostname === host;
+      var okRef = ALLOW.some(h => ref.indexOf(h) !== -1);
+      var okHost = ALLOW.some(h => host.indexOf(h) !== -1);
+      if (!(same || okRef || okHost)) {
+        location.replace('https://yumistories.com/book-keeper-secret-shelf');
+      }
+    })();
+  </script>
+
   <style>
     :root { --bg:#0f1115; --fg:#f2f2f2; --muted:#98a2b3; --zoom:1; }
     *{box-sizing:border-box}
@@ -27,7 +43,7 @@
     .page{
       position:relative;margin:0 auto 1.1rem;transform:scale(var(--zoom));
       transform-origin:top center;transition:transform .15s ease;
-      min-height:60vh; /* placeholder so IO triggers */
+      min-height:60vh;
     }
     .page img{
       width:100%;height:auto;display:block;border-radius:8px;
@@ -62,12 +78,12 @@
 
   <script>
   (function(){
-    // === CONFIG (tugma sa screenshot mo) ===
-    const DIR = "images/";        // folder (case-sensitive sa Netlify)
-    const TOTAL = 246;              // FFM + FFM_001..FFM_234  => 246 pages
-    const TITLE_PREFIX = "FFM";  // filenames base
+    // === CONFIG ===
+    const DIR = "images/";          // Folder of images (case-sensitive on Netlify)
+    const TOTAL = 246;              // 1 cover + 245 pages (adjust to your count)
+    const TITLE_PREFIX = "FFM";     // FFM.jpg, FFM_001.jpg, FFM_002.jpg ...
 
-    // update UI total
+    // Show total
     document.getElementById("total").textContent = TOTAL;
 
     // Build pages
@@ -77,10 +93,10 @@
       p.className = "page";
       p.dataset.page = i;
 
-      // No zero padding: CH23.jpg, CH23_1.jpg, CH23_2.jpg, ...
+      // Use 3-digit zero padding after the cover
       const filename = (i === 1)
         ? `${TITLE_PREFIX}.jpg`
-        : `${TITLE_PREFIX}_${i - 1}.jpg`;
+        : `${TITLE_PREFIX}_` + String(i - 1).padStart(3, "0") + `.jpg`;
 
       const img = document.createElement("img");
       img.alt = `Fight For Me – Page ${i}`;
@@ -98,7 +114,7 @@
       pagesEl.appendChild(p);
     }
 
-    // Lazy-load (observe IMG directly so page 2 shows)
+    // Lazy-load
     const io = new IntersectionObserver(entries => {
       entries.forEach(e => {
         const img = e.target;
@@ -108,20 +124,18 @@
         }
       });
     }, { rootMargin: "800px 0px" });
-
     document.querySelectorAll(".page img").forEach(img => io.observe(img));
 
     // State + helpers
     let current = 1, zoom = 1;
-    const clamp = (n, a, b) => Math.max(a, Math.min(b, n));
+    const clamp = (n,a,b)=>Math.max(a,Math.min(b,n));
     const go = document.getElementById("go");
 
-    function setZoom(z) {
+    function setZoom(z){
       zoom = clamp(z, 0.6, 2.5);
       document.documentElement.style.setProperty("--zoom", zoom);
     }
-
-    function scrollToPage(n, smooth=true) {
+    function scrollToPage(n, smooth=true){
       current = clamp(n, 1, TOTAL);
       go.value = current;
       const el = document.querySelector(`.page[data-page="${current}"]`);
@@ -132,78 +146,74 @@
     }
 
     // Controls
-    document.getElementById("prev").onclick = () => scrollToPage(current - 1);
-    document.getElementById("next").onclick = () => scrollToPage(current + 1);
-    document.getElementById("zin").onclick  = () => setZoom(zoom + 0.15);
-    document.getElementById("zout").onclick = () => setZoom(zoom - 0.15);
+    document.getElementById("prev").onclick = ()=>scrollToPage(current-1);
+    document.getElementById("next").onclick = ()=>scrollToPage(current+1);
+    document.getElementById("zin").onclick  = ()=>setZoom(zoom+0.15);
+    document.getElementById("zout").onclick = ()=>setZoom(zoom-0.15);
 
-    document.getElementById("fit").onclick = () => {
-      const firstImg = document.querySelector(".page img");
-      const doFit = () => {
-        const w = firstImg.naturalWidth || firstImg.getBoundingClientRect().width;
-        if (!w) return setZoom(1);
-        setZoom(pagesEl.clientWidth / w);
+    document.getElementById("fit").onclick = ()=>{
+      const first=document.querySelector(".page img");
+      const doFit=()=>{
+        const w=first.naturalWidth||first.getBoundingClientRect().width;
+        if(!w) return setZoom(1);
+        setZoom(pagesEl.clientWidth/w);
       };
-      if (firstImg.complete && firstImg.naturalWidth) doFit();
-      else {
-        if (!firstImg.src) firstImg.src = firstImg.dataset.src;
-        firstImg.addEventListener("load", doFit, { once:true });
-      }
+      if(first.complete&&first.naturalWidth) doFit();
+      else { if(!first.src) first.src=first.dataset.src; first.addEventListener("load",doFit,{once:true}); }
     };
 
-    document.getElementById("mode").onclick = () =>
-      document.body.classList.toggle("light");
+    document.getElementById("mode").onclick=()=>document.body.classList.toggle("light");
+    go.onchange=()=>scrollToPage(parseInt(go.value||"1",10));
 
-    go.onchange = () => scrollToPage(parseInt(go.value || "1", 10));
-
-    // Update current page while scrolling
-    const spy = new IntersectionObserver(es => {
-      es.forEach(e => {
-        if (e.isIntersecting) {
-          current = parseInt(e.target.parentElement.dataset.page, 10);
-          go.value = current;
+    // Page spy
+    const spy=new IntersectionObserver(es=>{
+      es.forEach(e=>{
+        if(e.isIntersecting){
+          current=parseInt(e.target.parentElement.dataset.page,10);
+          go.value=current;
         }
       });
-    }, { rootMargin: "-40% 0px -55% 0px" });
-    document.querySelectorAll(".page img").forEach(img => spy.observe(img));
+    },{rootMargin:"-40% 0px -55% 0px"});
+    document.querySelectorAll(".page img").forEach(img=>spy.observe(img));
 
-    // Keyboard shortcuts
-    window.addEventListener("keydown", e => {
-      if (e.key === "ArrowLeft")  scrollToPage(current - 1);
-      if (e.key === "ArrowRight") scrollToPage(current + 1);
-      if (e.key === "+")          setZoom(zoom + 0.15);
-      if (e.key === "-")          setZoom(zoom - 0.15);
-      if (e.key.toLowerCase() === "f") document.getElementById("fit").click();
+    // Keys
+    window.addEventListener("keydown",e=>{
+      if(e.key==="ArrowLeft")  scrollToPage(current-1);
+      if(e.key==="ArrowRight") scrollToPage(current+1);
+      if(e.key==="+")          setZoom(zoom+0.15);
+      if(e.key==="-")          setZoom(zoom-0.15);
+      if(e.key.toLowerCase()==="f") document.getElementById("fit").click();
     });
 
-    // Init from URL ?p=#
-    const startP = clamp(parseInt(new URLSearchParams(location.search).get("p") || "1", 10), 1, TOTAL);
-    go.value = startP;
+    // Init
+    const startP=clamp(parseInt(new URLSearchParams(location.search).get("p")||"1",10),1,TOTAL);
+    go.value=startP;
     setZoom(1);
 
-    // Pre-warm page 1 & 2 para siguradong visible agad
-    const first = document.querySelector('.page[data-page="1"] img');
-    if (first && !first.src) first.src = first.dataset.src;
-    const second = document.querySelector('.page[data-page="2"] img');
-    if (second && !second.src) second.src = second.dataset.src;
+    // Pre-warm first two pages
+    const first=document.querySelector('.page[data-page="1"] img');
+    if(first&&!first.src) first.src=first.dataset.src;
+    const second=document.querySelector('.page[data-page="2"] img');
+    if(second&&!second.src) second.src=second.dataset.src;
 
-    scrollToPage(startP, false);
+    scrollToPage(startP,false);
 
-    // Soft protections
-    document.addEventListener('contextmenu', e => e.preventDefault(), { capture:true });
-    document.addEventListener('dragstart', e => { if (e.target.tagName === 'IMG') e.preventDefault(); }, { capture:true });
-    document.addEventListener('selectstart', e => e.preventDefault(), { capture:true });
-    document.addEventListener('keydown', e => {
-      const k = e.key.toLowerCase();
-      if ((e.ctrlKey || e.metaKey) && ['s','u','p'].includes(k)) { e.preventDefault(); e.stopPropagation(); }
-      if ((e.ctrlKey || e.metaKey) && e.shiftKey && ['i','j','c'].includes(k)) { e.preventDefault(); e.stopPropagation(); }
-    }, true);
+    // Protections
+    document.addEventListener('contextmenu',e=>e.preventDefault(),{capture:true});
+    document.addEventListener('dragstart',e=>{if(e.target.tagName==="IMG")e.preventDefault();},{capture:true});
+    document.addEventListener('selectstart',e=>e.preventDefault(),{capture:true});
+    document.addEventListener('keydown',e=>{
+      const k=e.key.toLowerCase();
+      if((e.ctrlKey||e.metaKey)&&['s','u','p'].includes(k)){e.preventDefault();e.stopPropagation();}
+      if((e.ctrlKey||e.metaKey)&&e.shiftKey&&['i','j','c'].includes(k)){e.preventDefault();e.stopPropagation();}
+    },true);
   })();
   </script>
 
   <style>
-    html, body, img, .page { -webkit-user-select:none; user-select:none; -webkit-touch-callout:none; }
-    img { pointer-events:none; }
+    html,body,img,.page{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
+    img{pointer-events:none}
   </style>
 </body>
 </html>
+
