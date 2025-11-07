@@ -7,42 +7,64 @@
 <style>
   :root{--bg:#faf7f3;--ink:#2b2118;--muted:#6b5e52;--card:#fff;--shadow:rgba(0,0,0,.12)}
   *{box-sizing:border-box}
-  body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 Georgia,serif;text-align:center}
-  h1{font-size:2.2rem;margin:1.6rem 0 .4rem}
-  .subtitle{margin:0 0 1.6rem;color:var(--muted)}
-  .section{max-width:1100px;margin:0 auto 2.4rem;padding:0 1rem}
-  .section h2{font-size:.9rem;letter-spacing:.16em;text-transform:uppercase;color:#a88865;margin:0 0 1rem}
+  body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 Georgia,serif}
+  header{padding:18px 12px;text-align:center}
+  h1{margin:0 0 .25rem;font-size:1.6rem}
+  .subtitle{margin:0;color:var(--muted);font-size:.95rem}
 
-  /* Grid of books */
-  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
-        gap:1.2rem;justify-items:center}
+  .section{max-width:980px;margin:0 auto;padding:10px 14px 42px}
+  .section h2{margin:14px 0 10px;font-size:.8rem;letter-spacing:.18em;text-transform:uppercase;color:#a88865;text-align:center}
 
-  /* Book card */
-  .book{width:100%;max-width:200px;background:var(--card);border-radius:14px;
-        box-shadow:0 6px 22px var(--shadow);overflow:hidden;text-decoration:none;color:var(--ink);
-        transition:transform .18s ease, box-shadow .18s ease; display:block}
-  .book:hover{transform:translateY(-4px);box-shadow:0 12px 30px rgba(0,0,0,.18)}
+  /* GRID */
+  .grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(140px,1fr)); /* THUMB size */
+    gap:18px;
+    justify-items:center;
+  }
 
-  /* Cover: always 2:3 and contained */
-  .cover{display:block;width:100%;aspect-ratio:2/3;object-fit:cover;background:#efeae2}
-  .book h3{margin:.6rem 0 1rem;font-size:.98rem;font-weight:700}
-  footer{margin:2.4rem 0 1.2rem;color:#998c80;font-size:.85rem}
+  /* BOOK THUMB */
+  .book{display:block;text-decoration:none;color:inherit}
+  .thumb{
+    width:140px;                     /* << thumbnail width */
+    aspect-ratio:2/3;
+    object-fit:cover;
+    border-radius:12px;
+    background:#efeae2;
+    box-shadow:0 6px 18px var(--shadow);
+    transition:transform .15s ease, box-shadow .15s ease;
+    display:block;
+  }
+  .book:hover .thumb{transform:translateY(-3px);box-shadow:0 10px 28px rgba(0,0,0,.18)}
+  .title{margin:.45rem 0 0;text-align:center;font-size:.9rem;font-weight:700}
+
+  footer{margin:28px 0 18px;text-align:center;color:#988c80;font-size:.85rem}
 </style>
 </head>
 <body>
-  <h1>📚 The Book Keeper Shelf</h1>
-  <p class="subtitle">Wander through stories that were never meant to be shared — until now.</p>
+  <header>
+    <h1>📚 The Book Keeper Shelf</h1>
+    <p class="subtitle">Wander through stories that were never meant to be shared — until now.</p>
+  </header>
 
-  <!-- FOR ME SERIES -->
+  <!-- ====================== FOR ME SERIES ====================== -->
   <section class="section">
     <h2>For Me Series</h2>
     <div class="grid">
+
       <!-- Fight For Me -->
       <a class="book" href="/for-me-fight-for-me/">
-        <img class="cover" src="/for-me-fight-for-me/FFM.jpg" alt="Fight For Me" loading="lazy" width="400" height="600">
-        <h3>Fight For Me</h3>
+        <img class="thumb" src="/for-me-fight-for-me/FFM.jpg" alt="Fight For Me" loading="lazy" width="140" height="210">
+        <div class="title">Fight For Me</div>
       </a>
-      <!-- Add more books by duplicating the block above -->
+
+      <!-- Duplicate block above for other books. Example:
+      <a class="book" href="/for-me-stay-for-me/">
+        <img class="thumb" src="/for-me-stay-for-me/SFM.jpg" alt="Stay For Me" loading="lazy" width="140" height="210">
+        <div class="title">Stay For Me</div>
+      </a>
+      -->
+
     </div>
   </section>
 
