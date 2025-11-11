@@ -3,29 +3,36 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Fight For Me – Reader</title>
+  <title>Fight For Me — Reader</title>
+  <meta name="robots" content="noindex,nofollow" />
 
-  <!-- ✅ VIP guard: allow reader.yumistories.com and yumistories.com -->
+  <!-- ==== STORY GUARD — tolerant and whitelist-based ==== -->
   <script>
-    (function () {
-      var ALLOW = ['reader.yumistories.com','yumistories.com'];
-      var ref = document.referrer || '';
-      var host = location.hostname;
-      var same = ref && new URL(ref).hostname === host;
-      var okRef = ALLOW.some(h => ref.indexOf(h) !== -1);
-      var okHost = ALLOW.some(h => host.indexOf(h) !== -1);
-      if (!(same || okRef || okHost)) {
-        location.replace('https://yumistories.com/book-keeper-secret-shelf');
-      }
-    })();
+  (function () {
+    var OK = new Set(["reader.yumistories.com","yumistories.com","www.yumistories.com"]);
+    if (!OK.has(location.hostname)) {
+      location.replace("https://yumistories.com/book-keeper-secret-shelf");
+      return;
+    }
+    try { if (top !== self) top.location = self.location; } catch (_) {}
+    var r = document.referrer;
+    if (r) {
+      try {
+        var rh = new URL(r).hostname;
+        if (!OK.has(rh)) location.replace("https://yumistories.com/book-keeper-secret-shelf");
+      } catch(_) { /* allow if parsing fails */ }
+    }
+  })();
   </script>
 
+  <!-- ==== STYLES ==== -->
   <style>
     :root { --bg:#0f1115; --fg:#f2f2f2; --muted:#98a2b3; --zoom:1; }
     *{box-sizing:border-box}
+    html,body{height:100%}
     body{
       margin:0;background:var(--bg);color:var(--fg);
-      font:15px/1.6 system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial
+      font:15px/1.6 system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial,sans-serif
     }
     .bar{
       position:sticky;top:0;z-index:10;display:flex;align-items:center;gap:.5rem;
@@ -42,8 +49,7 @@
     .wrap{max-width:1000px;margin:0 auto;padding:1rem .8rem 3rem}
     .page{
       position:relative;margin:0 auto 1.1rem;transform:scale(var(--zoom));
-      transform-origin:top center;transition:transform .15s ease;
-      min-height:60vh;
+      transform-origin:top center;transition:transform .15s ease;min-height:60vh;
     }
     .page img{
       width:100%;height:auto;display:block;border-radius:8px;
@@ -57,14 +63,16 @@
     .sep{width:1px;height:28px;background:#2a3142;margin:0 .4rem}
     .hide{display:none!important}
     .light{ --bg:#ffffff; --fg:#101418; --muted:#4b5563 }
+    a.link{color:inherit;text-decoration:none;border-bottom:1px dashed #3b4255}
   </style>
 </head>
 <body>
+  <!-- ==== TOP BAR ==== -->
   <div class="bar" role="toolbar" aria-label="Reader controls">
     <div class="title">Fight For Me</div>
     <button class="btn" id="prev" aria-label="Previous page">← Prev</button>
     <label class="muted" for="go">Page</label>
-    <input class="num" id="go" type="number" min="1" value="1" inputmode="numeric">
+    <input class="num" id="go" type="number" min="1" value="1" inputmode="numeric" aria-label="Go to page">
     <span class="muted">/ <span id="total">—</span></span>
     <button class="btn" id="next" aria-label="Next page">Next →</button>
     <div class="sep" aria-hidden="true"></div>
@@ -72,40 +80,57 @@
     <button class="btn" id="zin" aria-label="Zoom in">+</button>
     <button class="btn" id="zout" aria-label="Zoom out">−</button>
     <button class="btn" id="mode" aria-label="Toggle light/dark">🌙/☀️</button>
+    <div style="margin-left:.4rem">
+      <a class="link" href="/" aria-label="Back to Library">Library</a>
+    </div>
   </div>
 
+  <!-- ==== PAGES ==== -->
   <div id="pages" class="wrap" aria-live="polite"></div>
 
+  <!-- ==== READER SCRIPT ==== -->
   <script>
   (function(){
-    // === CONFIG ===
-    const DIR = "images/";          // Folder of images (case-sensitive on Netlify)
-    const TOTAL = 246;              // 1 cover + 245 pages (adjust to your count)
-    const TITLE_PREFIX = "FFM";     // FFM.jpg, FFM_001.jpg, FFM_002.jpg ...
+    // === CONFIG (edit these to match your files) ===========================
+    var DIR = "images/";          // images folder (relative to this file)
+    var TOTAL = 246;              // total frames (1 cover + N pages)
+    var TITLE_PREFIX = "FFM";     // FFM.jpg, FFM_001.jpg, FFM_002.jpg ...
+    var EXT = ".jpg";             // file extension (".jpg" / ".webp" etc.)
+    // ======================================================================
+
+    // TEMP debug for image failures (remove when all good)
+    window.__imgErrors = 0;
 
     // Show total
     document.getElementById("total").textContent = TOTAL;
 
     // Build pages
-    const pagesEl = document.getElementById("pages");
-    for (let i = 1; i <= TOTAL; i++) {
-      const p = document.createElement("div");
+    var pagesEl = document.getElementById("pages");
+    for (var i = 1; i <= TOTAL; i++) {
+      var p = document.createElement("div");
       p.className = "page";
       p.dataset.page = i;
 
-      // Use 3-digit zero padding after the cover
-      const filename = (i === 1)
-        ? `${TITLE_PREFIX}.jpg`
-        : `${TITLE_PREFIX}_` + String(i - 1).padStart(3, "0") + `.jpg`;
+      var filename = (i === 1)
+        ? (TITLE_PREFIX + EXT)
+        : (TITLE_PREFIX + "_" + String(i - 1).padStart(3, "0") + EXT);
 
-      const img = document.createElement("img");
-      img.alt = `Fight For Me – Page ${i}`;
+      var img = document.createElement("img");
+      img.alt = "Fight For Me — Page " + i;
       img.loading = "lazy";
       img.decoding = "async";
       img.dataset.src = DIR + filename;
-      img.onerror = () => p.classList.add("hide");
+      img.onerror = (function(container){
+        return function(){
+          container.classList.add("hide");
+          window.__imgErrors++;
+          if (window.__imgErrors === 1) {
+            alert("Some pages failed to load. Check /fight-for-me/" + DIR + " filenames & case.");
+          }
+        };
+      })(p);
 
-      const tag = document.createElement("div");
+      var tag = document.createElement("div");
       tag.className = "tag";
       tag.textContent = i;
 
@@ -114,102 +139,112 @@
       pagesEl.appendChild(p);
     }
 
-    // Lazy-load
-    const io = new IntersectionObserver(entries => {
-      entries.forEach(e => {
-        const img = e.target;
+    // Lazy-load images
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        var img = e.target;
         if (e.isIntersecting && img && !img.src) {
           img.src = img.dataset.src;
           io.unobserve(img);
         }
       });
     }, { rootMargin: "800px 0px" });
-    document.querySelectorAll(".page img").forEach(img => io.observe(img));
+    Array.prototype.forEach.call(document.querySelectorAll(".page img"), function(img){ io.observe(img); });
 
     // State + helpers
-    let current = 1, zoom = 1;
-    const clamp = (n,a,b)=>Math.max(a,Math.min(b,n));
-    const go = document.getElementById("go");
+    var current = 1, zoom = 1;
+    var go = document.getElementById("go");
 
+    function clamp(n,a,b){ return Math.max(a, Math.min(b, n)); }
     function setZoom(z){
       zoom = clamp(z, 0.6, 2.5);
       document.documentElement.style.setProperty("--zoom", zoom);
     }
-    function scrollToPage(n, smooth=true){
+    function scrollToPage(n, smooth){
+      if (smooth === void 0) smooth = true;
       current = clamp(n, 1, TOTAL);
       go.value = current;
-      const el = document.querySelector(`.page[data-page="${current}"]`);
+      var el = document.querySelector('.page[data-page="' + current + '"]');
       if (el) window.scrollTo({ top: el.offsetTop - 70, behavior: smooth ? "smooth" : "auto" });
-      const url = new URL(location);
+      var url = new URL(location.href);
       url.searchParams.set("p", current);
       history.replaceState(null, "", url);
     }
 
     // Controls
-    document.getElementById("prev").onclick = ()=>scrollToPage(current-1);
-    document.getElementById("next").onclick = ()=>scrollToPage(current+1);
-    document.getElementById("zin").onclick  = ()=>setZoom(zoom+0.15);
-    document.getElementById("zout").onclick = ()=>setZoom(zoom-0.15);
+    document.getElementById("prev").onclick = function(){ scrollToPage(current-1); };
+    document.getElementById("next").onclick = function(){ scrollToPage(current+1); };
+    document.getElementById("zin").onclick  = function(){ setZoom(zoom+0.15); };
+    document.getElementById("zout").onclick = function(){ setZoom(zoom-0.15); };
 
-    document.getElementById("fit").onclick = ()=>{
-      const first=document.querySelector(".page img");
-      const doFit=()=>{
-        const w=first.naturalWidth||first.getBoundingClientRect().width;
-        if(!w) return setZoom(1);
-        setZoom(pagesEl.clientWidth/w);
+    document.getElementById("fit").onclick = function(){
+      var first = document.querySelector(".page img");
+      var doFit = function(){
+        var w = first.naturalWidth || first.getBoundingClientRect().width;
+        if (!w) return setZoom(1);
+        setZoom(document.getElementById("pages").clientWidth / w);
       };
-      if(first.complete&&first.naturalWidth) doFit();
-      else { if(!first.src) first.src=first.dataset.src; first.addEventListener("load",doFit,{once:true}); }
+      if (first.complete && first.naturalWidth) doFit();
+      else {
+        if (!first.src) first.src = first.dataset.src;
+        first.addEventListener("load", doFit, {once:true});
+      }
     };
 
-    document.getElementById("mode").onclick=()=>document.body.classList.toggle("light");
-    go.onchange=()=>scrollToPage(parseInt(go.value||"1",10));
+    document.getElementById("mode").onclick = function(){
+      document.body.classList.toggle("light");
+    };
+    go.onchange = function(){
+      scrollToPage(parseInt(go.value || "1", 10));
+    };
 
-    // Page spy
-    const spy=new IntersectionObserver(es=>{
-      es.forEach(e=>{
-        if(e.isIntersecting){
-          current=parseInt(e.target.parentElement.dataset.page,10);
-          go.value=current;
+    // Page spy (updates the page number while scrolling)
+    var spy = new IntersectionObserver(function(es){
+      es.forEach(function(e){
+        if (e.isIntersecting) {
+          current = parseInt(e.target.parentElement.dataset.page, 10);
+          go.value = current;
         }
       });
-    },{rootMargin:"-40% 0px -55% 0px"});
-    document.querySelectorAll(".page img").forEach(img=>spy.observe(img));
+    }, { rootMargin:"-40% 0px -55% 0px" });
+    Array.prototype.forEach.call(document.querySelectorAll(".page img"), function(img){ spy.observe(img); });
 
-    // Keys
-    window.addEventListener("keydown",e=>{
-      if(e.key==="ArrowLeft")  scrollToPage(current-1);
-      if(e.key==="ArrowRight") scrollToPage(current+1);
-      if(e.key==="+")          setZoom(zoom+0.15);
-      if(e.key==="-")          setZoom(zoom-0.15);
-      if(e.key.toLowerCase()==="f") document.getElementById("fit").click();
+    // Keyboard shortcuts
+    window.addEventListener("keydown", function(e){
+      var k = e.key;
+      if (k === "ArrowLeft")  scrollToPage(current-1);
+      if (k === "ArrowRight") scrollToPage(current+1);
+      if (k === "+")          setZoom(zoom+0.15);
+      if (k === "-")          setZoom(zoom-0.15);
+      if (k.toLowerCase() === "f") document.getElementById("fit").click();
     });
 
     // Init
-    const startP=clamp(parseInt(new URLSearchParams(location.search).get("p")||"1",10),1,TOTAL);
-    go.value=startP;
+    var startP = clamp(parseInt(new URLSearchParams(location.search).get("p") || "1", 10), 1, TOTAL);
+    go.value = startP;
     setZoom(1);
 
     // Pre-warm first two pages
-    const first=document.querySelector('.page[data-page="1"] img');
-    if(first&&!first.src) first.src=first.dataset.src;
-    const second=document.querySelector('.page[data-page="2"] img');
-    if(second&&!second.src) second.src=second.dataset.src;
+    var first = document.querySelector('.page[data-page="1"] img');
+    if (first && !first.src) first.src = first.dataset.src;
+    var second = document.querySelector('.page[data-page="2"] img');
+    if (second && !second.src) second.src = second.dataset.src;
 
-    scrollToPage(startP,false);
+    scrollToPage(startP, false);
 
-    // Protections
-    document.addEventListener('contextmenu',e=>e.preventDefault(),{capture:true});
-    document.addEventListener('dragstart',e=>{if(e.target.tagName==="IMG")e.preventDefault();},{capture:true});
-    document.addEventListener('selectstart',e=>e.preventDefault(),{capture:true});
-    document.addEventListener('keydown',e=>{
-      const k=e.key.toLowerCase();
-      if((e.ctrlKey||e.metaKey)&&['s','u','p'].includes(k)){e.preventDefault();e.stopPropagation();}
-      if((e.ctrlKey||e.metaKey)&&e.shiftKey&&['i','j','c'].includes(k)){e.preventDefault();e.stopPropagation();}
-    },true);
+    // Protections (optional—keep if you want)
+    document.addEventListener("contextmenu", function(e){ e.preventDefault(); }, {capture:true});
+    document.addEventListener("dragstart", function(e){ if (e.target && e.target.tagName==="IMG") e.preventDefault(); }, {capture:true});
+    document.addEventListener("selectstart", function(e){ e.preventDefault(); }, {capture:true});
+    document.addEventListener("keydown", function(e){
+      var k = (e.key || "").toLowerCase();
+      if ((e.ctrlKey||e.metaKey) && ["s","u","p"].includes(k)) { e.preventDefault(); e.stopPropagation(); }
+      if ((e.ctrlKey||e.metaKey) && e.shiftKey && ["i","j","c"].includes(k)) { e.preventDefault(); e.stopPropagation(); }
+    }, true);
   })();
   </script>
 
+  <!-- ==== NON-SELECTABLE IMAGES ==== -->
   <style>
     html,body,img,.page{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
     img{pointer-events:none}
