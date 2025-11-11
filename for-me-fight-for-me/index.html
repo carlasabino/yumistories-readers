@@ -5,38 +5,28 @@
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>Fight For Me — Reader</title>
 <meta name="robots" content="noindex,nofollow" />
-
-<!-- Guard (tolerant) -->
-<script>
-(function(){
-  var OK = {"reader.yumistories.com":1,"yumistories.com":1,"www.yumistories.com":1};
-  if (!OK[location.hostname]) { location.replace("https://yumistories.com/book-keeper-secret-shelf"); return; }
-  try { if (top !== self) top.location = self.location; } catch(_) {}
-  var r=document.referrer; if(r){ try{ var rh=new URL(r).hostname; if(!OK[rh]) location.replace("https://yumistories.com/book-keeper-secret-shelf"); }catch(_){} }
-})();
-</script>
-
+<script>(function(){var OK={"reader.yumistories.com":1,"yumistories.com":1,"www.yumistories.com":1};if(!OK[location.hostname]){location.replace("https://yumistories.com/book-keeper-secret-shelf");return;}try{if(top!==self)top.location=self.location;}catch(_){}var r=document.referrer;if(r){try{var rh=new URL(r).hostname;if(!OK[rh])location.replace("https://yumistories.com/book-keeper-secret-shelf");}catch(_){}}})();</script>
 <style>
-  :root{--bg:#0f1115;--fg:#f2f2f2;--muted:#98a2b3;--zoom:1}
-  *{box-sizing:border-box} html,body{height:100%}
-  body{margin:0;background:var(--bg);color:var(--fg);font:15px/1.6 system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial,sans-serif}
-  .bar{position:sticky;top:0;z-index:10;display:flex;align-items:center;gap:.5rem;padding:.6rem .8rem;background:#151821cc;backdrop-filter:blur(8px);border-bottom:1px solid #232836}
-  .title{font-weight:700;letter-spacing:.3px;margin-right:auto}
-  .btn,.num{background:#1a1f2b;color:var(--fg);border:1px solid #2a3142;border-radius:10px;padding:.45rem .7rem;font:inherit;cursor:pointer}
-  .btn:active{transform:translateY(1px)} .num{width:5.2rem;text-align:center}
-  .wrap{max-width:1000px;margin:0 auto;padding:1rem .8rem 3rem}
-  .page{position:relative;margin:0 auto 1.1rem;transform:scale(var(--zoom));transform-origin:top center;transition:transform .15s ease;min-height:60vh}
-  .page img{width:100%;height:auto;display:block;border-radius:8px;background:#0c0f14;box-shadow:0 10px 30px rgba(0,0,0,.35)}
-  .page .tag{position:absolute;right:10px;bottom:10px;background:rgba(0,0,0,.55);color:#fff;font-size:12px;padding:.15rem .4rem;border-radius:6px}
-  .muted{color:var(--muted)} .sep{width:1px;height:28px;background:#2a3142;margin:0 .4rem}
-  .light{--bg:#ffffff;--fg:#101418;--muted:#4b5563}
-  a.link{color:inherit;text-decoration:none;border-bottom:1px dashed #3b4255}
-  .alert{position:fixed;left:10px;bottom:10px;background:#2a1a1a;border:1px solid #6b2a2a;padding:10px;border-radius:10px;font-size:12px;max-width:340px;z-index:99}
-  .alert b{color:#ffb3b3}
+:root{--bg:#0f1115;--fg:#f2f2f2;--muted:#98a2b3;--zoom:1}
+*{box-sizing:border-box}html,body{height:100%}
+body{margin:0;background:var(--bg);color:var(--fg);font:15px/1.6 system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial,sans-serif}
+.bar{position:sticky;top:0;z-index:10;display:flex;align-items:center;gap:.5rem;padding:.6rem .8rem;background:#151821cc;backdrop-filter:blur(8px);border-bottom:1px solid #232836}
+.title{font-weight:700;letter-spacing:.3px;margin-right:auto}
+.btn,.num{background:#1a1f2b;color:var(--fg);border:1px solid #2a3142;border-radius:10px;padding:.45rem .7rem;font:inherit;cursor:pointer}
+.btn:active{transform:translateY(1px)}.num{width:5.2rem;text-align:center}
+.wrap{max-width:1000px;margin:0 auto;padding:1rem .8rem 3rem}
+.page{position:relative;margin:0 auto 1.1rem;transform:scale(var(--zoom));transform-origin:top center;transition:transform .15s ease;min-height:60vh}
+.page img{width:100%;height:auto;display:block;border-radius:8px;background:#0c0f14;box-shadow:0 10px 30px rgba(0,0,0,.35)}
+.page .tag{position:absolute;right:10px;bottom:10px;background:rgba(0,0,0,.55);color:#fff;font-size:12px;padding:.15rem .4rem;border-radius:6px}
+.muted{color:var(--muted)}.sep{width:1px;height:28px;background:#2a3142;margin:0 .4rem}
+.light{--bg:#ffffff;--fg:#101418;--muted:#4b5563}a.link{color:inherit;text-decoration:none;border-bottom:1px dashed #3b4255}
+.diag{position:fixed;right:10px;bottom:10px;z-index:99;max-width:360px;background:#0b0d12e6;border:1px solid #2a3142;border-radius:12px;padding:10px;font-size:12px}
+.diag h3{margin:0 0 6px;font-size:12px}
+.diag code{word-break:break-all}
 </style>
 </head>
 <body>
-  <div class="bar" role="toolbar" aria-label="Reader controls">
+  <div class="bar" role="toolbar">
     <div class="title">Fight For Me</div>
     <button class="btn" id="prev">← Prev</button>
     <label class="muted" for="go">Page</label>
@@ -52,47 +42,35 @@
   </div>
 
   <div id="pages" class="wrap" aria-live="polite"></div>
-  <div id="alert" class="alert" style="display:none"></div>
+
+  <div class="diag" id="diag">
+    <h3>Diagnostics</h3>
+    <div>First image URL: <code id="d-url"></code></div>
+    <div>First image type: <code id="d-type"></code></div>
+    <div>Errors: <span id="d-err">0</span></div>
+  </div>
 
 <script>
 (function(){
-  // ===== BASE PATH — ito ang folder mo =====
-  var BASE = "/for-me-fight-for-me/";   // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-  var DIR  = BASE + "images/";          // images folder inside it
+  // ABSOLUTE base so redirects can’t break it
+  var DIR = "/for-me-fight-for-me/images/";
+  var TOTAL = 246;               // adjust to your real count
+  var TITLE_PREFIX = "FFM";      // FFM.jpg, FFM_001.jpg, ...
+  var EXT = ".jpg";              // change if your files are .webp/.png
 
-  // ===== CONFIG you can edit =====
-  var TOTAL = 246;           // 1 cover + N pages (adjust to your real count)
-  var TITLE_PREFIX = "FFM";  // FFM.jpg, FFM_001.jpg, ...
+  function nameFor(i){
+    return (i===1) ? (TITLE_PREFIX+EXT)
+                   : (TITLE_PREFIX+"_"+String(i-1).padStart(3,"0")+EXT);
+  }
+  function urlFor(i){ return DIR + nameFor(i); }
 
-  // ===== helpers =====
-  var EXTS = [".jpg",".JPG",".jpeg",".webp",".png"];
-  function coverNames(){
-    var names=[]; EXTS.forEach(ext=>names.push(TITLE_PREFIX+ext)); EXTS.forEach(ext=>names.push("cover"+ext)); return names;
-  }
-  function pageNames(n){
-    var k=n-1, out=[];
-    EXTS.forEach(function(ext){
-      out.push(TITLE_PREFIX+"_"+String(k).padStart(3,"0")+ext);
-      out.push(TITLE_PREFIX+"-"+String(k).padStart(3,"0")+ext);
-      out.push(TITLE_PREFIX+"_"+k+ext);
-      out.push(TITLE_PREFIX+" ("+k+")"+ext);
-    });
-    return out;
-  }
-  function showAlert(html){ var a=document.getElementById("alert"); a.innerHTML=html; a.style.display="block"; }
-
-  async function findFirstExisting(urls){
-    for (var i=0;i<urls.length;i++){
-      try { var res = await fetch(urls[i], {cache:"no-store"}); if (res.ok) return urls[i]; } catch(e){}
-    }
-    return null;
-  }
-  async function resolveUrl(i){
-    var candidates=[];
-    if(i===1){ coverNames().forEach(n=>candidates.push(DIR+n)); }
-    else { pageNames(i).forEach(n=>candidates.push(DIR+n)); }
-    return await findFirstExisting(candidates);
-  }
+  // Show first URL & content-type test (catches catch-all redirects)
+  var firstURL = urlFor(1);
+  document.getElementById("d-url").textContent = firstURL;
+  fetch(firstURL, {cache:"no-store"}).then(r=>{
+    var ct = r.headers.get("content-type") || "(none)";
+    document.getElementById("d-type").textContent = ct;
+  }).catch(()=>{ document.getElementById("d-type").textContent="(request failed)"; });
 
   // Build shells
   var pagesEl=document.getElementById("pages");
@@ -100,28 +78,22 @@
   for (var i=1;i<=TOTAL;i++){
     var p=document.createElement("div"); p.className="page"; p.dataset.page=i;
     var img=document.createElement("img"); img.alt="Fight For Me — Page "+i; img.loading="lazy"; img.decoding="async";
+    img.dataset.src=urlFor(i);
+    img.onerror=(function(container){ return function(){ container.style.display="none"; var n=document.getElementById("d-err"); n.textContent=+n.textContent+1; }; })(p);
     var tag=document.createElement("div"); tag.className="tag"; tag.textContent=i;
     p.appendChild(img); p.appendChild(tag); pagesEl.appendChild(p);
   }
 
-  // Lazy resolve + load
-  var resolving={};
-  var io=new IntersectionObserver(async function(entries){
-    for (var e of entries){
-      if(!e.isIntersecting) continue;
-      var img=e.target; if(img.src){ io.unobserve(img); continue; }
-      var idx=parseInt(img.parentElement.dataset.page,10);
-      if(!resolving[idx]){
-        resolving[idx]=true;
-        var url=await resolveUrl(idx);
-        if(url){ img.src=url; } else { img.parentElement.style.display="none"; }
-        io.unobserve(img);
-      }
-    }
+  // Lazy load
+  var io=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      var img=e.target;
+      if(e.isIntersecting && img && !img.src){ img.src=img.dataset.src; io.unobserve(img); }
+    });
   },{rootMargin:"800px 0px"});
-  Array.prototype.forEach.call(document.querySelectorAll(".page img"), img=>io.observe(img));
+  Array.prototype.forEach.call(document.querySelectorAll(".page img"), function(img){ io.observe(img); });
 
-  // Reader controls
+  // Controls
   var current=1, zoom=1, go=document.getElementById("go");
   function clamp(n,a,b){return Math.max(a,Math.min(b,n))}
   function setZoom(z){ zoom=clamp(z,0.6,2.5); document.documentElement.style.setProperty("--zoom",zoom); }
@@ -138,7 +110,7 @@
     var first=document.querySelector(".page img");
     var doFit=function(){ var w=first.naturalWidth||first.getBoundingClientRect().width; if(!w) return setZoom(1);
       setZoom(document.getElementById("pages").clientWidth / w); };
-    if(first.complete&&first.naturalWidth) doFit(); else { first.addEventListener("load",doFit,{once:true}); }
+    if(first.complete&&first.naturalWidth) doFit(); else { if(!first.src) first.src=first.dataset.src; first.addEventListener("load",doFit,{once:true}); }
   }
   document.getElementById("mode").onclick=function(){document.body.classList.toggle("light")}
   go.onchange=function(){scrollToPage(parseInt(go.value||"1",10))}
@@ -146,21 +118,14 @@
   Array.prototype.forEach.call(document.querySelectorAll(".page img"), function(img){ spy.observe(img); });
   window.addEventListener("keydown",function(e){ var k=e.key||""; if(k==="ArrowLeft")scrollToPage(current-1); if(k==="ArrowRight")scrollToPage(current+1); if(k==="+")setZoom(zoom+0.15); if(k==="-")setZoom(zoom-0.15); if(k.toLowerCase()==="f")document.getElementById("fit").click(); });
 
-  // Init + prewarm
-  var startP=clamp(parseInt(new URLSearchParams(location.search).get("p")||"1",10),1,TOTAL); go.value=startP; setZoom(1);
-  (async function(){
-    var first=document.querySelector('.page[data-page="1"] img');
-    var second=document.querySelector('.page[data-page="2"] img');
-    var u1=await resolveUrl(1), u2=await resolveUrl(2);
-    if(!u1 || !u2){
-      showAlert("<b>Heads up:</b> Check mo kung nandito talaga ang files:<br><code>"+DIR+"FFM.jpg</code><br>or <code>"+DIR+"cover.jpg</code><br>Case-sensitive ang Netlify.");
-    }
-    if(u1) first.src=u1;
-    if(u2) second.src=u2;
-    scrollToPage(startP,false);
-  })();
+  // Init
+  var startP=Math.max(1,Math.min(TOTAL,parseInt(new URLSearchParams(location.search).get("p")||"1",10)));
+  go.value=startP; setZoom(1);
+  var first=document.querySelector('.page[data-page="1"] img'); if(first&&!first.src) first.src=first.dataset.src;
+  var second=document.querySelector('.page[data-page="2"] img'); if(second&&!second.src) second.src=second.dataset.src;
+  scrollToPage(startP,false);
 
-  // Optional anti-copy
+  // Anti-copy (optional)
   document.addEventListener("contextmenu",e=>e.preventDefault(),{capture:true});
   document.addEventListener("dragstart",e=>{ if(e.target&&e.target.tagName==="IMG") e.preventDefault(); },{capture:true});
   document.addEventListener("selectstart",e=>e.preventDefault(),{capture:true});
@@ -173,8 +138,8 @@
 </script>
 
 <style>
-  html,body,img,.page{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
-  img{pointer-events:none}
+html,body,img,.page{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
+img{pointer-events:none}
 </style>
 </body>
 </html>
