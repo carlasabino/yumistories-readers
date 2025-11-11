@@ -5,26 +5,113 @@
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>Fight For Me — Reader</title>
 <meta name="robots" content="noindex,nofollow" />
-<script>(function(){var OK={"reader.yumistories.com":1,"yumistories.com":1,"www.yumistories.com":1};if(!OK[location.hostname]){location.replace("https://yumistories.com/book-keeper-secret-shelf");return;}try{if(top!==self)top.location=self.location;}catch(_){}var r=document.referrer;if(r){try{var rh=new URL(r).hostname;if(!OK[rh])location.replace("https://yumistories.com/book-keeper-secret-shelf");}catch(_){}}})();</script>
+
+<!-- ==== VIP GUARD ==== -->
+<script>
+(function(){
+  const OK = {"reader.yumistories.com":1,"yumistories.com":1,"www.yumistories.com":1};
+  if(!OK[location.hostname]) {
+    location.replace("https://yumistories.com/book-keeper-secret-shelf");
+    return;
+  }
+  try { if(top !== self) top.location = self.location; } catch(_) {}
+  const r = document.referrer;
+  if (r) {
+    try {
+      const rh = new URL(r).hostname;
+      if(!OK[rh]) location.replace("https://yumistories.com/book-keeper-secret-shelf");
+    } catch(_){}
+  }
+})();
+</script>
+
 <style>
-:root{--bg:#0f1115;--fg:#f2f2f2;--muted:#98a2b3;--zoom:1}
-*{box-sizing:border-box}html,body{height:100%}
-body{margin:0;background:var(--bg);color:var(--fg);font:15px/1.6 system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial,sans-serif}
-.bar{position:sticky;top:0;z-index:10;display:flex;align-items:center;gap:.5rem;padding:.6rem .8rem;background:#151821cc;backdrop-filter:blur(8px);border-bottom:1px solid #232836}
+:root {
+  --bg:#0f1115;
+  --fg:#f2f2f2;
+  --muted:#98a2b3;
+  --zoom:1;
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--fg);
+  font:15px/1.6 system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial,sans-serif;
+}
+.bar{
+  position:sticky;
+  top:0;
+  z-index:10;
+  display:flex;
+  align-items:center;
+  gap:.5rem;
+  padding:.6rem .8rem;
+  background:#151821cc;
+  backdrop-filter:blur(8px);
+  border-bottom:1px solid #232836;
+}
 .title{font-weight:700;letter-spacing:.3px;margin-right:auto}
-.btn,.num{background:#1a1f2b;color:var(--fg);border:1px solid #2a3142;border-radius:10px;padding:.45rem .7rem;font:inherit;cursor:pointer}
-.btn:active{transform:translateY(1px)}.num{width:5.2rem;text-align:center}
+.btn,.num{
+  background:#1a1f2b;
+  color:var(--fg);
+  border:1px solid #2a3142;
+  border-radius:10px;
+  padding:.45rem .7rem;
+  font:inherit;
+  cursor:pointer;
+}
+.btn:active{transform:translateY(1px)}
+.num{width:5.2rem;text-align:center}
 .wrap{max-width:1000px;margin:0 auto;padding:1rem .8rem 3rem}
-.page{position:relative;margin:0 auto 1.1rem;transform:scale(var(--zoom));transform-origin:top center;transition:transform .15s ease;min-height:60vh}
-.page img{width:100%;height:auto;display:block;border-radius:8px;background:#0c0f14;box-shadow:0 10px 30px rgba(0,0,0,.35)}
-.page .tag{position:absolute;right:10px;bottom:10px;background:rgba(0,0,0,.55);color:#fff;font-size:12px;padding:.15rem .4rem;border-radius:6px}
-.muted{color:var(--muted)}.sep{width:1px;height:28px;background:#2a3142;margin:0 .4rem}
-.light{--bg:#ffffff;--fg:#101418;--muted:#4b5563}a.link{color:inherit;text-decoration:none;border-bottom:1px dashed #3b4255}
-.diag{position:fixed;right:10px;bottom:10px;z-index:99;max-width:360px;background:#0b0d12e6;border:1px solid #2a3142;border-radius:12px;padding:10px;font-size:12px}
+.page{
+  position:relative;
+  margin:0 auto 1.1rem;
+  transform:scale(var(--zoom));
+  transform-origin:top center;
+  transition:transform .15s ease;
+  min-height:60vh;
+}
+.page img{
+  width:100%;
+  height:auto;
+  display:block;
+  border-radius:8px;
+  background:#0c0f14;
+  box-shadow:0 10px 30px rgba(0,0,0,.35);
+}
+.page .tag{
+  position:absolute;
+  right:10px;
+  bottom:10px;
+  background:rgba(0,0,0,.55);
+  color:#fff;
+  font-size:12px;
+  padding:.15rem .4rem;
+  border-radius:6px;
+}
+.muted{color:var(--muted)}
+.sep{width:1px;height:28px;background:#2a3142;margin:0 .4rem}
+.light{--bg:#ffffff;--fg:#101418;--muted:#4b5563}
+a.link{color:inherit;text-decoration:none;border-bottom:1px dashed #3b4255}
+.diag{
+  position:fixed;
+  right:10px;
+  bottom:10px;
+  z-index:99;
+  max-width:360px;
+  background:#0b0d12e6;
+  border:1px solid #2a3142;
+  border-radius:12px;
+  padding:10px;
+  font-size:12px;
+}
 .diag h3{margin:0 0 6px;font-size:12px}
 .diag code{word-break:break-all}
 </style>
 </head>
+
 <body>
   <div class="bar" role="toolbar">
     <div class="title">Fight For Me</div>
@@ -38,7 +125,9 @@ body{margin:0;background:var(--bg);color:var(--fg);font:15px/1.6 system-ui,-appl
     <button class="btn" id="zin">+</button>
     <button class="btn" id="zout">−</button>
     <button class="btn" id="mode">🌙/☀️</button>
-    <div style="margin-left:.4rem"><a class="link" href="/">Library</a></div>
+    <div style="margin-left:.4rem">
+      <a class="link" href="https://yumistories.com/book-keeper-secret-shelf">Library</a>
+    </div>
   </div>
 
   <div id="pages" class="wrap" aria-live="polite"></div>
@@ -52,71 +141,106 @@ body{margin:0;background:var(--bg);color:var(--fg);font:15px/1.6 system-ui,-appl
 
 <script>
 (function(){
-  // ABSOLUTE base so redirects can’t break it
-  var DIR = "/for-me-fight-for-me/images/";
-  var TOTAL = 246;               // adjust to your real count
-  var TITLE_PREFIX = "FFM";      // FFM.jpg, FFM_001.jpg, ...
-  var EXT = ".jpg";              // change if your files are .webp/.png
+  // === CONFIG ===
+  var DIR = "./images/";     // Folder relative to this index.html
+  var TOTAL = 245;           // Total number of images
+  var TITLE_PREFIX = "FFM";  // Base filename
+  var EXT = ".jpg";
 
+  // FFM.jpg → FFM_001.jpg → FFM_002.jpg ...
   function nameFor(i){
-    return (i===1) ? (TITLE_PREFIX+EXT)
-                   : (TITLE_PREFIX+"_"+String(i-1).padStart(3,"0")+EXT);
+    return (i===1)
+      ? (TITLE_PREFIX + EXT)
+      : (TITLE_PREFIX + "_" + String(i-1).padStart(3,"0") + EXT);
   }
   function urlFor(i){ return DIR + nameFor(i); }
 
-  // Show first URL & content-type test (catches catch-all redirects)
+  // Diagnostics
   var firstURL = urlFor(1);
   document.getElementById("d-url").textContent = firstURL;
   fetch(firstURL, {cache:"no-store"}).then(r=>{
     var ct = r.headers.get("content-type") || "(none)";
-    document.getElementById("d-type").textContent = ct;
+    document.getElementById("d-type").textContent = r.status + " " + ct;
   }).catch(()=>{ document.getElementById("d-type").textContent="(request failed)"; });
 
-  // Build shells
+  // Build image shells
   var pagesEl=document.getElementById("pages");
   document.getElementById("total").textContent=TOTAL;
   for (var i=1;i<=TOTAL;i++){
     var p=document.createElement("div"); p.className="page"; p.dataset.page=i;
-    var img=document.createElement("img"); img.alt="Fight For Me — Page "+i; img.loading="lazy"; img.decoding="async";
+    var img=document.createElement("img");
+    img.alt="Fight For Me — Page "+i;
+    img.loading="lazy"; img.decoding="async";
     img.dataset.src=urlFor(i);
-    img.onerror=(function(container){ return function(){ container.style.display="none"; var n=document.getElementById("d-err"); n.textContent=+n.textContent+1; }; })(p);
-    var tag=document.createElement("div"); tag.className="tag"; tag.textContent=i;
-    p.appendChild(img); p.appendChild(tag); pagesEl.appendChild(p);
+    img.onerror=(function(container){ return function(){
+      container.style.display="none";
+      var n=document.getElementById("d-err");
+      n.textContent=+n.textContent+1;
+    };})(p);
+    var tag=document.createElement("div");
+    tag.className="tag"; tag.textContent=i;
+    p.appendChild(img); p.appendChild(tag);
+    pagesEl.appendChild(p);
   }
 
   // Lazy load
   var io=new IntersectionObserver(function(entries){
     entries.forEach(function(e){
       var img=e.target;
-      if(e.isIntersecting && img && !img.src){ img.src=img.dataset.src; io.unobserve(img); }
+      if(e.isIntersecting && img && !img.src){
+        img.src=img.dataset.src;
+        io.unobserve(img);
+      }
     });
   },{rootMargin:"800px 0px"});
-  Array.prototype.forEach.call(document.querySelectorAll(".page img"), function(img){ io.observe(img); });
+  Array.prototype.forEach.call(document.querySelectorAll(".page img"), img=>io.observe(img));
 
   // Controls
   var current=1, zoom=1, go=document.getElementById("go");
   function clamp(n,a,b){return Math.max(a,Math.min(b,n))}
   function setZoom(z){ zoom=clamp(z,0.6,2.5); document.documentElement.style.setProperty("--zoom",zoom); }
-  function scrollToPage(n,smooth){ n=clamp(n,1,TOTAL); current=n; go.value=n;
+  function scrollToPage(n,smooth){
+    n=clamp(n,1,TOTAL); current=n; go.value=n;
     var el=document.querySelector('.page[data-page="'+n+'"]');
     if(el) window.scrollTo({top:el.offsetTop-70,behavior:(smooth!==false?"smooth":"auto")});
-    var u=new URL(location.href); u.searchParams.set("p",n); history.replaceState(null,"",u);
+    var u=new URL(location.href);
+    u.searchParams.set("p",n);
+    history.replaceState(null,"",u);
   }
-  document.getElementById("prev").onclick=function(){scrollToPage(current-1)}
-  document.getElementById("next").onclick=function(){scrollToPage(current+1)}
-  document.getElementById("zin").onclick=function(){setZoom(zoom+0.15)}
-  document.getElementById("zout").onclick=function(){setZoom(zoom-0.15)}
-  document.getElementById("fit").onclick=function(){
+  document.getElementById("prev").onclick=()=>scrollToPage(current-1);
+  document.getElementById("next").onclick=()=>scrollToPage(current+1);
+  document.getElementById("zin").onclick=()=>setZoom(zoom+0.15);
+  document.getElementById("zout").onclick=()=>setZoom(zoom-0.15);
+  document.getElementById("fit").onclick=()=>{
     var first=document.querySelector(".page img");
-    var doFit=function(){ var w=first.naturalWidth||first.getBoundingClientRect().width; if(!w) return setZoom(1);
-      setZoom(document.getElementById("pages").clientWidth / w); };
-    if(first.complete&&first.naturalWidth) doFit(); else { if(!first.src) first.src=first.dataset.src; first.addEventListener("load",doFit,{once:true}); }
-  }
-  document.getElementById("mode").onclick=function(){document.body.classList.toggle("light")}
-  go.onchange=function(){scrollToPage(parseInt(go.value||"1",10))}
-  var spy=new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting){ current=parseInt(e.target.parentElement.dataset.page,10); go.value=current; } });},{rootMargin:"-40% 0px -55% 0px"});
-  Array.prototype.forEach.call(document.querySelectorAll(".page img"), function(img){ spy.observe(img); });
-  window.addEventListener("keydown",function(e){ var k=e.key||""; if(k==="ArrowLeft")scrollToPage(current-1); if(k==="ArrowRight")scrollToPage(current+1); if(k==="+")setZoom(zoom+0.15); if(k==="-")setZoom(zoom-0.15); if(k.toLowerCase()==="f")document.getElementById("fit").click(); });
+    var doFit=function(){
+      var w=first.naturalWidth||first.getBoundingClientRect().width;
+      if(!w) return setZoom(1);
+      setZoom(document.getElementById("pages").clientWidth / w);
+    };
+    if(first.complete&&first.naturalWidth) doFit();
+    else { if(!first.src) first.src=first.dataset.src;
+      first.addEventListener("load",doFit,{once:true}); }
+  };
+  document.getElementById("mode").onclick=()=>document.body.classList.toggle("light");
+  go.onchange=()=>scrollToPage(parseInt(go.value||"1",10));
+  var spy=new IntersectionObserver(function(es){
+    es.forEach(function(e){
+      if(e.isIntersecting){
+        current=parseInt(e.target.parentElement.dataset.page,10);
+        go.value=current;
+      }
+    });
+  },{rootMargin:"-40% 0px -55% 0px"});
+  Array.prototype.forEach.call(document.querySelectorAll(".page img"), img=>spy.observe(img));
+  window.addEventListener("keydown",function(e){
+    var k=e.key||"";
+    if(k==="ArrowLeft")scrollToPage(current-1);
+    if(k==="ArrowRight")scrollToPage(current+1);
+    if(k==="+")setZoom(zoom+0.15);
+    if(k==="-")setZoom(zoom-0.15);
+    if(k.toLowerCase()==="f")document.getElementById("fit").click();
+  });
 
   // Init
   var startP=Math.max(1,Math.min(TOTAL,parseInt(new URLSearchParams(location.search).get("p")||"1",10)));
@@ -125,7 +249,7 @@ body{margin:0;background:var(--bg);color:var(--fg);font:15px/1.6 system-ui,-appl
   var second=document.querySelector('.page[data-page="2"] img'); if(second&&!second.src) second.src=second.dataset.src;
   scrollToPage(startP,false);
 
-  // Anti-copy (optional)
+  // Anti-copy
   document.addEventListener("contextmenu",e=>e.preventDefault(),{capture:true});
   document.addEventListener("dragstart",e=>{ if(e.target&&e.target.tagName==="IMG") e.preventDefault(); },{capture:true});
   document.addEventListener("selectstart",e=>e.preventDefault(),{capture:true});
@@ -143,3 +267,4 @@ img{pointer-events:none}
 </style>
 </body>
 </html>
+
