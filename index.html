@@ -1,468 +1,480 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Fight For Me - Reader</title>
-<meta name="robots" content="noindex,nofollow" />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Fight For Me | Reader</title>
+  <meta name="robots" content="noindex,nofollow" />
 
-<script>
-(function () {
-  var OK = {
-    "reader.yumistories.com": 1,
-    "yumistories.com": 1,
-    "www.yumistories.com": 1
-  };
+  <script>
+    (function () {
+      var ALLOWED = {
+        "reader.yumistories.com": true,
+        "yumistories.com": true,
+        "www.yumistories.com": true
+      };
 
-  if (!OK[location.hostname]) {
-    location.replace("https://yumistories.com/book-keeper-secret-shelf");
-    return;
-  }
+      var SHELF_URL = "https://yumistories.com/book-keeper-secret-shelf";
 
-  try {
-    if (top !== self) top.location = self.location;
-  } catch (_) {}
-
-  var r = document.referrer;
-  if (r) {
-    try {
-      var rh = new URL(r).hostname;
-      if (!OK[rh]) {
-        location.replace("https://yumistories.com/book-keeper-secret-shelf");
+      if (!ALLOWED[location.hostname]) {
+        location.replace(SHELF_URL);
         return;
       }
-    } catch (_) {}
-  }
-})();
-</script>
 
-<style>
-  :root { --bg:#0f1115; --fg:#f2f2f2; --muted:#98a2b3; --zoom:1; }
-  * { box-sizing:border-box; }
-  html, body { height:100%; }
-  body {
-    margin:0;
-    background:var(--bg);
-    color:var(--fg);
-    font:15px/1.6 system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial,sans-serif;
-  }
-  .bar {
-    position:sticky;
-    top:0;
-    z-index:10;
-    display:flex;
-    align-items:center;
-    gap:.5rem;
-    padding:.6rem .8rem;
-    background:#151821cc;
-    backdrop-filter:blur(8px);
-    border-bottom:1px solid #232836;
-  }
-  .title { font-weight:700; letter-spacing:.3px; margin-right:auto; }
-  .btn, .num {
-    background:#1a1f2b;
-    color:var(--fg);
-    border:1px solid #2a3142;
-    border-radius:10px;
-    padding:.45rem .7rem;
-    font:inherit;
-    cursor:pointer;
-  }
-  .btn:active { transform:translateY(1px); }
-  .num { width:5.2rem; text-align:center; }
-  .wrap { max-width:1000px; margin:0 auto; padding:1rem .8rem 3rem; }
-  .page {
-    position:relative;
-    margin:0 auto 1.1rem;
-    transform:scale(var(--zoom));
-    transform-origin:top center;
-    transition:transform .15s ease;
-    min-height:60vh;
-  }
-  .page img {
-    width:100%;
-    height:auto;
-    display:block;
-    border-radius:8px;
-    background:#0c0f14;
-    box-shadow:0 10px 30px rgba(0,0,0,.35);
-  }
-  .page .tag {
-    position:absolute;
-    right:10px;
-    bottom:10px;
-    background:rgba(0,0,0,.55);
-    color:#fff;
-    font-size:12px;
-    padding:.15rem .4rem;
-    border-radius:6px;
-  }
-  .muted { color:var(--muted); }
-  .sep { width:1px; height:28px; background:#2a3142; margin:0 .4rem; }
-  .light { --bg:#ffffff; --fg:#101418; --muted:#4b5563; }
-  a.link { color:inherit; text-decoration:none; border-bottom:1px dashed #3b4255; }
-  .alert {
-    position:fixed;
-    left:10px;
-    bottom:10px;
-    background:#2a1a1a;
-    border:1px solid #6b2a2a;
-    padding:10px;
-    border-radius:10px;
-    font-size:12px;
-    max-width:340px;
-    z-index:99;
-  }
-  .alert b { color:#ffb3b3; }
+      try {
+        if (top !== self) top.location = self.location;
+      } catch (e) {}
 
-  html, body, img, .page {
-    -webkit-user-select:none;
-    user-select:none;
-    -webkit-touch-callout:none;
-  }
-  img { pointer-events:none; }
-</style>
+      if (document.referrer) {
+        try {
+          var refHost = new URL(document.referrer).hostname;
+          if (!ALLOWED[refHost]) {
+            location.replace(SHELF_URL);
+          }
+        } catch (e) {}
+      }
+    })();
+  </script>
+
+  <style>
+    :root {
+      --bg: #0f1115;
+      --panel: #151821;
+      --card: #0c0f14;
+      --text: #f2f2f2;
+      --muted: #98a2b3;
+      --line: #2a3142;
+      --accent: #1a1f2b;
+      --zoom: 1;
+    }
+
+    body.light {
+      --bg: #ffffff;
+      --panel: #f7f8fa;
+      --card: #eef1f5;
+      --text: #101418;
+      --muted: #4b5563;
+      --line: #d7dde5;
+      --accent: #ffffff;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      background: var(--bg);
+      color: var(--text);
+      font: 15px/1.5 system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      -webkit-user-select: none;
+      user-select: none;
+      -webkit-touch-callout: none;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 12px;
+      background: rgba(21, 24, 33, 0.92);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--line);
+    }
+
+    body.light .topbar {
+      background: rgba(247, 248, 250, 0.92);
+    }
+
+    .title {
+      font-weight: 700;
+      margin-right: auto;
+      white-space: nowrap;
+    }
+
+    .btn,
+    .num {
+      border: 1px solid var(--line);
+      background: var(--accent);
+      color: var(--text);
+      border-radius: 10px;
+      padding: 8px 10px;
+      font: inherit;
+    }
+
+    .btn {
+      cursor: pointer;
+    }
+
+    .num {
+      width: 72px;
+      text-align: center;
+    }
+
+    .muted {
+      color: var(--muted);
+    }
+
+    .sep {
+      width: 1px;
+      height: 28px;
+      background: var(--line);
+      margin: 0 4px;
+    }
+
+    .wrap {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 16px 12px 50px;
+    }
+
+    .page {
+      position: relative;
+      margin: 0 auto 18px;
+      transform: scale(var(--zoom));
+      transform-origin: top center;
+      transition: transform 0.15s ease;
+      min-height: 50vh;
+    }
+
+    .page img {
+      display: block;
+      width: 100%;
+      height: auto;
+      border-radius: 8px;
+      background: var(--card);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+      pointer-events: none;
+    }
+
+    .tag {
+      position: absolute;
+      right: 10px;
+      bottom: 10px;
+      font-size: 12px;
+      padding: 2px 7px;
+      border-radius: 6px;
+      background: rgba(0, 0, 0, 0.55);
+      color: white;
+    }
+
+    .alert {
+      position: fixed;
+      left: 12px;
+      bottom: 12px;
+      z-index: 200;
+      max-width: 360px;
+      display: none;
+      padding: 10px 12px;
+      border-radius: 10px;
+      background: #2a1a1a;
+      border: 1px solid #6b2a2a;
+      color: #ffe3e3;
+      font-size: 12px;
+    }
+
+    a.link {
+      color: inherit;
+      text-decoration: none;
+      border-bottom: 1px dashed var(--line);
+    }
+  </style>
 </head>
 <body>
-  <div class="bar" role="toolbar" aria-label="Reader controls">
+  <div class="topbar">
     <div class="title">Fight For Me</div>
+
     <button class="btn" id="prev">← Prev</button>
-    <label class="muted" for="go">Page</label>
-    <input class="num" id="go" type="number" min="1" value="1" inputmode="numeric">
-    <span class="muted">/ <span id="total">-</span></span>
+
+    <span class="muted">Page</span>
+    <input class="num" id="go" type="number" min="1" value="1" inputmode="numeric" />
+    <span class="muted">/ <span id="total">0</span></span>
+
     <button class="btn" id="next">Next →</button>
+
     <div class="sep"></div>
+
     <button class="btn" id="fit">Fit</button>
     <button class="btn" id="zin">+</button>
     <button class="btn" id="zout">-</button>
     <button class="btn" id="mode">🌙/☀️</button>
-    <div style="margin-left:.4rem">
+
+    <div style="margin-left:4px;">
       <a class="link" href="https://yumistories.com/book-keeper-secret-shelf">Library</a>
     </div>
   </div>
 
-  <div id="pages" class="wrap" aria-live="polite"></div>
-  <div id="alert" class="alert" style="display:none"></div>
+  <div class="wrap" id="pages"></div>
+  <div class="alert" id="alert"></div>
 
-<script>
-(function () {
-  var BASE = "/for-me-fight-for-me/";
-  var DIR = BASE + "images/";
+  <script>
+    (function () {
+      var CONFIG = {
+        title: "Fight For Me",
+        basePath: "./images/",
+        totalPages: 246,
+        coverName: "FFM.jpg",
+        prefix: "FFM_",
+        extension: ".jpg",
+        shelfUrl: "https://yumistories.com/book-keeper-secret-shelf"
+      };
 
-  var TOTAL = 246;
-  var TITLE_PREFIX = "FFM";
+      var pagesWrap = document.getElementById("pages");
+      var totalEl = document.getElementById("total");
+      var goEl = document.getElementById("go");
+      var prevBtn = document.getElementById("prev");
+      var nextBtn = document.getElementById("next");
+      var fitBtn = document.getElementById("fit");
+      var zinBtn = document.getElementById("zin");
+      var zoutBtn = document.getElementById("zout");
+      var modeBtn = document.getElementById("mode");
+      var alertEl = document.getElementById("alert");
 
-  var EXTS = [".jpg", ".JPG", ".jpeg", ".webp", ".png"];
-  var SHELF_URL = "https://yumistories.com/book-keeper-secret-shelf";
+      var currentPage = 1;
+      var zoom = 1;
+      var pages = [];
 
-  var pagesEl = document.getElementById("pages");
-  var totalEl = document.getElementById("total");
-  var go = document.getElementById("go");
-  var current = 1;
-  var zoom = 1;
-
-  function clamp(n, a, b) {
-    return Math.max(a, Math.min(b, n));
-  }
-
-  function showAlert(html) {
-    var a = document.getElementById("alert");
-    a.innerHTML = html;
-    a.style.display = "block";
-  }
-
-  function coverNames() {
-    var names = [];
-    EXTS.forEach(function (ext) { names.push(TITLE_PREFIX + ext); });
-    EXTS.forEach(function (ext) { names.push("cover" + ext); });
-    return names;
-  }
-
-  function pageNames(n) {
-    var k = n - 1;
-    var out = [];
-    EXTS.forEach(function (ext) {
-      out.push(TITLE_PREFIX + "_" + String(k).padStart(3, "0") + ext);
-      out.push(TITLE_PREFIX + "-" + String(k).padStart(3, "0") + ext);
-      out.push(TITLE_PREFIX + "_" + k + ext);
-      out.push(TITLE_PREFIX + " (" + k + ")" + ext);
-    });
-    return out;
-  }
-
-  function buildCandidates(i) {
-    var candidates = [];
-    if (i === 1) {
-      coverNames().forEach(function (n) { candidates.push(DIR + n); });
-    } else {
-      pageNames(i).forEach(function (n) { candidates.push(DIR + n); });
-    }
-    return candidates;
-  }
-
-  function tryImage(url) {
-    return new Promise(function (resolve) {
-      var img = new Image();
-      img.onload = function () { resolve(url); };
-      img.onerror = function () { resolve(null); };
-      img.src = url + "?v=" + Date.now();
-    });
-  }
-
-  async function findFirstExisting(urls) {
-    for (var i = 0; i < urls.length; i++) {
-      var ok = await tryImage(urls[i]);
-      if (ok) return urls[i];
-    }
-    return null;
-  }
-
-  async function resolveUrl(i) {
-    return await findFirstExisting(buildCandidates(i));
-  }
-
-  var validPages = [];
-
-  for (var i = 1; i <= TOTAL; i++) {
-    var p = document.createElement("div");
-    p.className = "page";
-    p.dataset.page = i;
-
-    var img = document.createElement("img");
-    img.alt = "Fight For Me - Page " + i;
-    img.loading = "lazy";
-    img.decoding = "async";
-
-    var tag = document.createElement("div");
-    tag.className = "tag";
-    tag.textContent = i;
-
-    p.appendChild(img);
-    p.appendChild(tag);
-    pagesEl.appendChild(p);
-  }
-
-  function getVisiblePages() {
-    return Array.prototype.filter.call(
-      document.querySelectorAll(".page"),
-      function (el) { return el.style.display !== "none"; }
-    );
-  }
-
-  function getVisiblePageNumbers() {
-    return getVisiblePages().map(function (el) {
-      return parseInt(el.dataset.page, 10);
-    });
-  }
-
-  function nearestVisiblePage(n) {
-    var nums = getVisiblePageNumbers();
-    if (!nums.length) return 1;
-    if (nums.indexOf(n) !== -1) return n;
-
-    var nearest = nums[0];
-    var bestDiff = Math.abs(nums[0] - n);
-
-    for (var i = 1; i < nums.length; i++) {
-      var d = Math.abs(nums[i] - n);
-      if (d < bestDiff) {
-        bestDiff = d;
-        nearest = nums[i];
+      function clamp(n, min, max) {
+        return Math.max(min, Math.min(max, n));
       }
-    }
-    return nearest;
-  }
 
-  function setDisplayedTotal() {
-    var nums = getVisiblePageNumbers();
-    totalEl.textContent = nums.length || TOTAL;
-  }
+      function showAlert(msg) {
+        alertEl.innerHTML = msg;
+        alertEl.style.display = "block";
+      }
 
-  function pageIndexDisplay(n) {
-    var nums = getVisiblePageNumbers();
-    var idx = nums.indexOf(n);
-    return idx >= 0 ? idx + 1 : n;
-  }
+      function pageFile(pageNumber) {
+        if (pageNumber === 1) return CONFIG.basePath + CONFIG.coverName;
 
-  function setZoom(z) {
-    zoom = clamp(z, 0.6, 2.5);
-    document.documentElement.style.setProperty("--zoom", zoom);
-  }
+        var n = String(pageNumber - 1).padStart(3, "0");
+        return CONFIG.basePath + CONFIG.prefix + n + CONFIG.extension;
+      }
 
-  function scrollToPage(n, smooth) {
-    n = nearestVisiblePage(clamp(n, 1, TOTAL));
-    current = n;
+      function buildPages() {
+        for (var i = 1; i <= CONFIG.totalPages; i++) {
+          var page = document.createElement("div");
+          page.className = "page";
+          page.dataset.page = i;
 
-    var displayNum = pageIndexDisplay(n);
-    go.value = displayNum;
+          var img = document.createElement("img");
+          img.alt = CONFIG.title + " | Page " + i;
+          img.loading = i <= 3 ? "eager" : "lazy";
+          img.decoding = "async";
+          img.src = pageFile(i);
 
-    var el = document.querySelector('.page[data-page="' + n + '"]');
-    if (el) {
-      window.scrollTo({
-        top: el.offsetTop - 70,
-        behavior: smooth !== false ? "smooth" : "auto"
+          img.onerror = function () {
+            this.closest(".page").style.display = "none";
+          };
+
+          var tag = document.createElement("div");
+          tag.className = "tag";
+          tag.textContent = i;
+
+          page.appendChild(img);
+          page.appendChild(tag);
+          pagesWrap.appendChild(page);
+          pages.push(page);
+        }
+      }
+
+      function getVisiblePages() {
+        return pages.filter(function (page) {
+          return page.style.display !== "none";
+        });
+      }
+
+      function getVisiblePageNumbers() {
+        return getVisiblePages().map(function (page) {
+          return parseInt(page.dataset.page, 10);
+        });
+      }
+
+      function updateTotal() {
+        totalEl.textContent = getVisiblePages().length;
+      }
+
+      function visibleIndexFromRealPage(realPage) {
+        var nums = getVisiblePageNumbers();
+        var idx = nums.indexOf(realPage);
+        return idx >= 0 ? idx + 1 : 1;
+      }
+
+      function realPageFromVisibleIndex(index) {
+        var nums = getVisiblePageNumbers();
+        return nums[index - 1] || nums[0] || 1;
+      }
+
+      function nearestVisiblePage(n) {
+        var nums = getVisiblePageNumbers();
+        if (!nums.length) return 1;
+        if (nums.indexOf(n) !== -1) return n;
+
+        var nearest = nums[0];
+        var diff = Math.abs(nums[0] - n);
+
+        for (var i = 1; i < nums.length; i++) {
+          var d = Math.abs(nums[i] - n);
+          if (d < diff) {
+            nearest = nums[i];
+            diff = d;
+          }
+        }
+        return nearest;
+      }
+
+      function setZoom(value) {
+        zoom = clamp(value, 0.6, 2.5);
+        document.documentElement.style.setProperty("--zoom", zoom);
+      }
+
+      function scrollToPage(realPage, smooth) {
+        realPage = nearestVisiblePage(clamp(realPage, 1, CONFIG.totalPages));
+        currentPage = realPage;
+
+        var el = document.querySelector('.page[data-page="' + realPage + '"]');
+        if (el) {
+          window.scrollTo({
+            top: el.offsetTop - 70,
+            behavior: smooth === false ? "auto" : "smooth"
+          });
+        }
+
+        goEl.value = visibleIndexFromRealPage(realPage);
+
+        var url = new URL(location.href);
+        url.searchParams.set("p", realPage);
+        history.replaceState(null, "", url.toString());
+      }
+
+      function updateCurrentByScroll() {
+        var visible = getVisiblePages();
+        if (!visible.length) return;
+
+        var bestPage = currentPage;
+        var bestDistance = Infinity;
+
+        visible.forEach(function (page) {
+          var rect = page.getBoundingClientRect();
+          var center = Math.abs(rect.top - 120);
+          if (rect.bottom > 120 && center < bestDistance) {
+            bestDistance = center;
+            bestPage = parseInt(page.dataset.page, 10);
+          }
+        });
+
+        currentPage = bestPage;
+        goEl.value = visibleIndexFromRealPage(currentPage);
+      }
+
+      function fitToWidth() {
+        var firstVisible = getVisiblePages()[0];
+        if (!firstVisible) return setZoom(1);
+
+        var img = firstVisible.querySelector("img");
+        if (!img || !img.naturalWidth) return setZoom(1);
+
+        var containerWidth = pagesWrap.clientWidth;
+        var imageWidth = img.naturalWidth;
+        setZoom(containerWidth / imageWidth);
+      }
+
+      prevBtn.addEventListener("click", function () {
+        var nums = getVisiblePageNumbers();
+        var idx = nums.indexOf(currentPage);
+        if (idx > 0) scrollToPage(nums[idx - 1]);
       });
-    }
 
-    var u = new URL(location.href);
-    u.searchParams.set("p", n);
-    history.replaceState(null, "", u);
-  }
+      nextBtn.addEventListener("click", function () {
+        var nums = getVisiblePageNumbers();
+        var idx = nums.indexOf(currentPage);
+        if (idx >= 0 && idx < nums.length - 1) scrollToPage(nums[idx + 1]);
+      });
 
-  async function loadPage(pageEl) {
-    var idx = parseInt(pageEl.dataset.page, 10);
-    var img = pageEl.querySelector("img");
-    if (img.dataset.loaded === "1") return;
+      zinBtn.addEventListener("click", function () {
+        setZoom(zoom + 0.15);
+      });
 
-    var url = await resolveUrl(idx);
+      zoutBtn.addEventListener("click", function () {
+        setZoom(zoom - 0.15);
+      });
 
-    if (url) {
-      img.src = url;
-      img.dataset.loaded = "1";
-      validPages.push(idx);
-      validPages.sort(function (a, b) { return a - b; });
-      setDisplayedTotal();
-      observeForSpy(img);
-    } else {
-      pageEl.style.display = "none";
-      setDisplayedTotal();
-    }
-  }
+      fitBtn.addEventListener("click", fitToWidth);
 
-  var io = new IntersectionObserver(function (entries) {
-    entries.forEach(function (entry) {
-      if (!entry.isIntersecting) return;
-      var pageEl = entry.target;
-      io.unobserve(pageEl);
-      loadPage(pageEl);
-    });
-  }, { rootMargin: "800px 0px" });
+      modeBtn.addEventListener("click", function () {
+        document.body.classList.toggle("light");
+      });
 
-  Array.prototype.forEach.call(document.querySelectorAll(".page"), function (pageEl) {
-    io.observe(pageEl);
-  });
+      goEl.addEventListener("change", function () {
+        var visibleIndex = parseInt(goEl.value || "1", 10);
+        var realPage = realPageFromVisibleIndex(visibleIndex);
+        scrollToPage(realPage);
+      });
 
-  var spy = new IntersectionObserver(function (entries) {
-    entries.forEach(function (entry) {
-      if (entry.isIntersecting) {
-        current = parseInt(entry.target.closest(".page").dataset.page, 10);
-        go.value = pageIndexDisplay(current);
-      }
-    });
-  }, { rootMargin: "-40% 0px -55% 0px" });
+      window.addEventListener("scroll", updateCurrentByScroll, { passive: true });
 
-  function observeForSpy(img) {
-    spy.observe(img);
-  }
+      window.addEventListener("keydown", function (e) {
+        var key = (e.key || "").toLowerCase();
 
-  document.getElementById("prev").onclick = function () {
-    var nums = getVisiblePageNumbers();
-    var idx = nums.indexOf(current);
-    if (idx > 0) scrollToPage(nums[idx - 1]);
-  };
+        if (key === "arrowleft") prevBtn.click();
+        if (key === "arrowright") nextBtn.click();
+        if (key === "+") zinBtn.click();
+        if (key === "-") zoutBtn.click();
+        if (key === "f") fitBtn.click();
+      });
 
-  document.getElementById("next").onclick = function () {
-    var nums = getVisiblePageNumbers();
-    var idx = nums.indexOf(current);
-    if (idx >= 0 && idx < nums.length - 1) scrollToPage(nums[idx + 1]);
-  };
+      document.addEventListener("contextmenu", function (e) {
+        e.preventDefault();
+      }, true);
 
-  document.getElementById("zin").onclick = function () {
-    setZoom(zoom + 0.15);
-  };
+      document.addEventListener("dragstart", function (e) {
+        if (e.target && e.target.tagName === "IMG") e.preventDefault();
+      }, true);
 
-  document.getElementById("zout").onclick = function () {
-    setZoom(zoom - 0.15);
-  };
+      document.addEventListener("selectstart", function (e) {
+        e.preventDefault();
+      }, true);
 
-  document.getElementById("fit").onclick = function () {
-    var firstLoaded = document.querySelector('.page img[data-loaded="1"]');
-    if (!firstLoaded) return setZoom(1);
+      document.addEventListener("keydown", function (e) {
+        var key = (e.key || "").toLowerCase();
 
-    var doFit = function () {
-      var w = firstLoaded.naturalWidth || firstLoaded.getBoundingClientRect().width;
-      if (!w) return setZoom(1);
-      setZoom(document.getElementById("pages").clientWidth / w);
-    };
+        if ((e.ctrlKey || e.metaKey) && ["s", "u", "p"].includes(key)) {
+          e.preventDefault();
+          e.stopPropagation();
+        }
 
-    if (firstLoaded.complete && firstLoaded.naturalWidth) {
-      doFit();
-    } else {
-      firstLoaded.addEventListener("load", doFit, { once: true });
-    }
-  };
+        if ((e.ctrlKey || e.metaKey) && e.shiftKey && ["i", "j", "c"].includes(key)) {
+          e.preventDefault();
+          e.stopPropagation();
+        }
+      }, true);
 
-  document.getElementById("mode").onclick = function () {
-    document.body.classList.toggle("light");
-  };
+      buildPages();
 
-  go.onchange = function () {
-    var nums = getVisiblePageNumbers();
-    var input = parseInt(go.value || "1", 10);
-    var target = nums[input - 1] || nearestVisiblePage(input);
-    scrollToPage(target);
-  };
+      window.addEventListener("load", function () {
+        setTimeout(function () {
+          updateTotal();
 
-  window.addEventListener("keydown", function (e) {
-    var k = e.key || "";
-    if (k === "ArrowLeft") document.getElementById("prev").click();
-    if (k === "ArrowRight") document.getElementById("next").click();
-    if (k === "+") setZoom(zoom + 0.15);
-    if (k === "-") setZoom(zoom - 0.15);
-    if (k.toLowerCase() === "f") document.getElementById("fit").click();
-  });
+          if (!getVisiblePages().length) {
+            showAlert(
+              "Walang images na makita.<br>" +
+              "Check mo ito:<br>" +
+              "<code>./images/" + CONFIG.coverName + "</code><br>" +
+              "<code>./images/" + CONFIG.prefix + "001" + CONFIG.extension + "</code><br>" +
+              "Case-sensitive si Netlify. Maarte siya."
+            );
+            return;
+          }
 
-  (async function init() {
-    setZoom(1);
-
-    var firstPage = document.querySelector('.page[data-page="1"]');
-    var secondPage = document.querySelector('.page[data-page="2"]');
-
-    await loadPage(firstPage);
-    await loadPage(secondPage);
-
-    if (!document.querySelector('.page img[data-loaded="1"]')) {
-      showAlert(
-        "<b>Heads up:</b> Walang mahanap na images.<br>" +
-        "Check mo ang path at filenames:<br>" +
-        "<code>" + DIR + "FFM.jpg</code><br>" +
-        "<code>" + DIR + "cover.jpg</code><br>" +
-        "<code>" + DIR + "FFM_001.jpg</code><br>" +
-        "Case-sensitive ang Netlify."
-      );
-      return;
-    }
-
-    setDisplayedTotal();
-
-    var startP = clamp(parseInt(new URLSearchParams(location.search).get("p") || "1", 10), 1, TOTAL);
-    scrollToPage(startP, false);
-  })();
-
-  document.addEventListener("contextmenu", function (e) {
-    e.preventDefault();
-  }, { capture:true });
-
-  document.addEventListener("dragstart", function (e) {
-    if (e.target && e.target.tagName === "IMG") e.preventDefault();
-  }, { capture:true });
-
-  document.addEventListener("selectstart", function (e) {
-    e.preventDefault();
-  }, { capture:true });
-
-  document.addEventListener("keydown", function (e) {
-    var k = (e.key || "").toLowerCase();
-    if ((e.ctrlKey || e.metaKey) && ["s", "u", "p"].includes(k)) {
-      e.preventDefault();
-      e.stopPropagation();
-    }
-    if ((e.ctrlKey || e.metaKey) && e.shiftKey && ["i", "j", "c"].includes(k)) {
-      e.preventDefault();
-      e.stopPropagation();
-    }
-  }, true);
-})();
-</script>
+          var start = parseInt(new URLSearchParams(location.search).get("p") || "1", 10);
+          scrollToPage(start, false);
+        }, 300);
+      });
+    })();
+  </script>
 </body>
 </html>
