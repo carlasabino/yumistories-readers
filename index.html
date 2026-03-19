@@ -2,77 +2,467 @@
 <html lang="en">
 <head>
 <meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>The Book Keeper Shelf — YumiStories</title>
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Fight For Me - Reader</title>
+<meta name="robots" content="noindex,nofollow" />
+
+<script>
+(function () {
+  var OK = {
+    "reader.yumistories.com": 1,
+    "yumistories.com": 1,
+    "www.yumistories.com": 1
+  };
+
+  if (!OK[location.hostname]) {
+    location.replace("https://yumistories.com/book-keeper-secret-shelf");
+    return;
+  }
+
+  try {
+    if (top !== self) top.location = self.location;
+  } catch (_) {}
+
+  var r = document.referrer;
+  if (r) {
+    try {
+      var rh = new URL(r).hostname;
+      if (!OK[rh]) {
+        location.replace("https://yumistories.com/book-keeper-secret-shelf");
+        return;
+      }
+    } catch (_) {}
+  }
+})();
+</script>
+
 <style>
-  :root{--bg:#faf7f3;--ink:#2b2118;--muted:#6b5e52;--card:#fff;--shadow:rgba(0,0,0,.12)}
-  *{box-sizing:border-box}
-  body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 Georgia,serif}
-  header{padding:18px 12px;text-align:center}
-  h1{margin:0 0 .25rem;font-size:1.6rem}
-  .subtitle{margin:0;color:var(--muted);font-size:.95rem}
-
-  .section{max-width:980px;margin:0 auto;padding:10px 14px 42px}
-  .section h2{margin:14px 0 10px;font-size:.8rem;letter-spacing:.18em;text-transform:uppercase;color:#a88865;text-align:center}
-
-  /* GRID */
-  .grid{
-    display:grid;
-    grid-template-columns:repeat(auto-fill,minmax(140px,1fr)); /* THUMB size */
-    gap:18px;
-    justify-items:center;
+  :root { --bg:#0f1115; --fg:#f2f2f2; --muted:#98a2b3; --zoom:1; }
+  * { box-sizing:border-box; }
+  html, body { height:100%; }
+  body {
+    margin:0;
+    background:var(--bg);
+    color:var(--fg);
+    font:15px/1.6 system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial,sans-serif;
   }
-
-  /* BOOK THUMB */
-  .book{display:block;text-decoration:none;color:inherit}
-  .thumb{
-    width:140px;                     /* << thumbnail width */
-    aspect-ratio:2/3;
-    object-fit:cover;
-    border-radius:12px;
-    background:#efeae2;
-    box-shadow:0 6px 18px var(--shadow);
-    transition:transform .15s ease, box-shadow .15s ease;
+  .bar {
+    position:sticky;
+    top:0;
+    z-index:10;
+    display:flex;
+    align-items:center;
+    gap:.5rem;
+    padding:.6rem .8rem;
+    background:#151821cc;
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid #232836;
+  }
+  .title { font-weight:700; letter-spacing:.3px; margin-right:auto; }
+  .btn, .num {
+    background:#1a1f2b;
+    color:var(--fg);
+    border:1px solid #2a3142;
+    border-radius:10px;
+    padding:.45rem .7rem;
+    font:inherit;
+    cursor:pointer;
+  }
+  .btn:active { transform:translateY(1px); }
+  .num { width:5.2rem; text-align:center; }
+  .wrap { max-width:1000px; margin:0 auto; padding:1rem .8rem 3rem; }
+  .page {
+    position:relative;
+    margin:0 auto 1.1rem;
+    transform:scale(var(--zoom));
+    transform-origin:top center;
+    transition:transform .15s ease;
+    min-height:60vh;
+  }
+  .page img {
+    width:100%;
+    height:auto;
     display:block;
+    border-radius:8px;
+    background:#0c0f14;
+    box-shadow:0 10px 30px rgba(0,0,0,.35);
   }
-  .book:hover .thumb{transform:translateY(-3px);box-shadow:0 10px 28px rgba(0,0,0,.18)}
-  .title{margin:.45rem 0 0;text-align:center;font-size:.9rem;font-weight:700}
+  .page .tag {
+    position:absolute;
+    right:10px;
+    bottom:10px;
+    background:rgba(0,0,0,.55);
+    color:#fff;
+    font-size:12px;
+    padding:.15rem .4rem;
+    border-radius:6px;
+  }
+  .muted { color:var(--muted); }
+  .sep { width:1px; height:28px; background:#2a3142; margin:0 .4rem; }
+  .light { --bg:#ffffff; --fg:#101418; --muted:#4b5563; }
+  a.link { color:inherit; text-decoration:none; border-bottom:1px dashed #3b4255; }
+  .alert {
+    position:fixed;
+    left:10px;
+    bottom:10px;
+    background:#2a1a1a;
+    border:1px solid #6b2a2a;
+    padding:10px;
+    border-radius:10px;
+    font-size:12px;
+    max-width:340px;
+    z-index:99;
+  }
+  .alert b { color:#ffb3b3; }
 
-  footer{margin:28px 0 18px;text-align:center;color:#988c80;font-size:.85rem}
+  html, body, img, .page {
+    -webkit-user-select:none;
+    user-select:none;
+    -webkit-touch-callout:none;
+  }
+  img { pointer-events:none; }
 </style>
 </head>
 <body>
-  <header>
-    <h1>📚 The Book Keeper Shelf</h1>
-    <p class="subtitle">Wander through stories that were never meant to be shared — until now.</p>
-  </header>
-
-  <!-- ====================== FOR ME SERIES ====================== -->
-  <section class="section">
-    <h2>For Me Series</h2>
-    <div class="grid">
-
-      <!-- Fight For Me -->
-      <a class="book" href="/for-me-fight-for-me/">
-        <img class="thumb" src="/for-me-fight-for-me/FFM.jpg" alt="Fight For Me" loading="lazy" width="140" height="210">
-        <div class="title">Fight For Me</div>
-      </a>
-
-      <!-- Duplicate block above for other books. Example:
-      <a class="book" href="/for-me-stay-for-me/">
-        <img class="thumb" src="/for-me-stay-for-me/SFM.jpg" alt="Stay For Me" loading="lazy" width="140" height="210">
-        <div class="title">Stay For Me</div>
-      </a>
-      -->
-
+  <div class="bar" role="toolbar" aria-label="Reader controls">
+    <div class="title">Fight For Me</div>
+    <button class="btn" id="prev">← Prev</button>
+    <label class="muted" for="go">Page</label>
+    <input class="num" id="go" type="number" min="1" value="1" inputmode="numeric">
+    <span class="muted">/ <span id="total">-</span></span>
+    <button class="btn" id="next">Next →</button>
+    <div class="sep"></div>
+    <button class="btn" id="fit">Fit</button>
+    <button class="btn" id="zin">+</button>
+    <button class="btn" id="zout">-</button>
+    <button class="btn" id="mode">🌙/☀️</button>
+    <div style="margin-left:.4rem">
+      <a class="link" href="https://yumistories.com/book-keeper-secret-shelf">Library</a>
     </div>
-  </section>
+  </div>
 
+  <div id="pages" class="wrap" aria-live="polite"></div>
+  <div id="alert" class="alert" style="display:none"></div>
 
+<script>
+(function () {
+  var BASE = "/for-me-fight-for-me/";
+  var DIR = BASE + "images/";
 
+  var TOTAL = 246;
+  var TITLE_PREFIX = "FFM";
 
-  
-  <footer>Made with 🖤 for <strong>YumiStories.com</strong></footer>
+  var EXTS = [".jpg", ".JPG", ".jpeg", ".webp", ".png"];
+  var SHELF_URL = "https://yumistories.com/book-keeper-secret-shelf";
+
+  var pagesEl = document.getElementById("pages");
+  var totalEl = document.getElementById("total");
+  var go = document.getElementById("go");
+  var current = 1;
+  var zoom = 1;
+
+  function clamp(n, a, b) {
+    return Math.max(a, Math.min(b, n));
+  }
+
+  function showAlert(html) {
+    var a = document.getElementById("alert");
+    a.innerHTML = html;
+    a.style.display = "block";
+  }
+
+  function coverNames() {
+    var names = [];
+    EXTS.forEach(function (ext) { names.push(TITLE_PREFIX + ext); });
+    EXTS.forEach(function (ext) { names.push("cover" + ext); });
+    return names;
+  }
+
+  function pageNames(n) {
+    var k = n - 1;
+    var out = [];
+    EXTS.forEach(function (ext) {
+      out.push(TITLE_PREFIX + "_" + String(k).padStart(3, "0") + ext);
+      out.push(TITLE_PREFIX + "-" + String(k).padStart(3, "0") + ext);
+      out.push(TITLE_PREFIX + "_" + k + ext);
+      out.push(TITLE_PREFIX + " (" + k + ")" + ext);
+    });
+    return out;
+  }
+
+  function buildCandidates(i) {
+    var candidates = [];
+    if (i === 1) {
+      coverNames().forEach(function (n) { candidates.push(DIR + n); });
+    } else {
+      pageNames(i).forEach(function (n) { candidates.push(DIR + n); });
+    }
+    return candidates;
+  }
+
+  function tryImage(url) {
+    return new Promise(function (resolve) {
+      var img = new Image();
+      img.onload = function () { resolve(url); };
+      img.onerror = function () { resolve(null); };
+      img.src = url + "?v=" + Date.now();
+    });
+  }
+
+  async function findFirstExisting(urls) {
+    for (var i = 0; i < urls.length; i++) {
+      var ok = await tryImage(urls[i]);
+      if (ok) return urls[i];
+    }
+    return null;
+  }
+
+  async function resolveUrl(i) {
+    return await findFirstExisting(buildCandidates(i));
+  }
+
+  var validPages = [];
+
+  for (var i = 1; i <= TOTAL; i++) {
+    var p = document.createElement("div");
+    p.className = "page";
+    p.dataset.page = i;
+
+    var img = document.createElement("img");
+    img.alt = "Fight For Me - Page " + i;
+    img.loading = "lazy";
+    img.decoding = "async";
+
+    var tag = document.createElement("div");
+    tag.className = "tag";
+    tag.textContent = i;
+
+    p.appendChild(img);
+    p.appendChild(tag);
+    pagesEl.appendChild(p);
+  }
+
+  function getVisiblePages() {
+    return Array.prototype.filter.call(
+      document.querySelectorAll(".page"),
+      function (el) { return el.style.display !== "none"; }
+    );
+  }
+
+  function getVisiblePageNumbers() {
+    return getVisiblePages().map(function (el) {
+      return parseInt(el.dataset.page, 10);
+    });
+  }
+
+  function nearestVisiblePage(n) {
+    var nums = getVisiblePageNumbers();
+    if (!nums.length) return 1;
+    if (nums.indexOf(n) !== -1) return n;
+
+    var nearest = nums[0];
+    var bestDiff = Math.abs(nums[0] - n);
+
+    for (var i = 1; i < nums.length; i++) {
+      var d = Math.abs(nums[i] - n);
+      if (d < bestDiff) {
+        bestDiff = d;
+        nearest = nums[i];
+      }
+    }
+    return nearest;
+  }
+
+  function setDisplayedTotal() {
+    var nums = getVisiblePageNumbers();
+    totalEl.textContent = nums.length || TOTAL;
+  }
+
+  function pageIndexDisplay(n) {
+    var nums = getVisiblePageNumbers();
+    var idx = nums.indexOf(n);
+    return idx >= 0 ? idx + 1 : n;
+  }
+
+  function setZoom(z) {
+    zoom = clamp(z, 0.6, 2.5);
+    document.documentElement.style.setProperty("--zoom", zoom);
+  }
+
+  function scrollToPage(n, smooth) {
+    n = nearestVisiblePage(clamp(n, 1, TOTAL));
+    current = n;
+
+    var displayNum = pageIndexDisplay(n);
+    go.value = displayNum;
+
+    var el = document.querySelector('.page[data-page="' + n + '"]');
+    if (el) {
+      window.scrollTo({
+        top: el.offsetTop - 70,
+        behavior: smooth !== false ? "smooth" : "auto"
+      });
+    }
+
+    var u = new URL(location.href);
+    u.searchParams.set("p", n);
+    history.replaceState(null, "", u);
+  }
+
+  async function loadPage(pageEl) {
+    var idx = parseInt(pageEl.dataset.page, 10);
+    var img = pageEl.querySelector("img");
+    if (img.dataset.loaded === "1") return;
+
+    var url = await resolveUrl(idx);
+
+    if (url) {
+      img.src = url;
+      img.dataset.loaded = "1";
+      validPages.push(idx);
+      validPages.sort(function (a, b) { return a - b; });
+      setDisplayedTotal();
+      observeForSpy(img);
+    } else {
+      pageEl.style.display = "none";
+      setDisplayedTotal();
+    }
+  }
+
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (!entry.isIntersecting) return;
+      var pageEl = entry.target;
+      io.unobserve(pageEl);
+      loadPage(pageEl);
+    });
+  }, { rootMargin: "800px 0px" });
+
+  Array.prototype.forEach.call(document.querySelectorAll(".page"), function (pageEl) {
+    io.observe(pageEl);
+  });
+
+  var spy = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (entry.isIntersecting) {
+        current = parseInt(entry.target.closest(".page").dataset.page, 10);
+        go.value = pageIndexDisplay(current);
+      }
+    });
+  }, { rootMargin: "-40% 0px -55% 0px" });
+
+  function observeForSpy(img) {
+    spy.observe(img);
+  }
+
+  document.getElementById("prev").onclick = function () {
+    var nums = getVisiblePageNumbers();
+    var idx = nums.indexOf(current);
+    if (idx > 0) scrollToPage(nums[idx - 1]);
+  };
+
+  document.getElementById("next").onclick = function () {
+    var nums = getVisiblePageNumbers();
+    var idx = nums.indexOf(current);
+    if (idx >= 0 && idx < nums.length - 1) scrollToPage(nums[idx + 1]);
+  };
+
+  document.getElementById("zin").onclick = function () {
+    setZoom(zoom + 0.15);
+  };
+
+  document.getElementById("zout").onclick = function () {
+    setZoom(zoom - 0.15);
+  };
+
+  document.getElementById("fit").onclick = function () {
+    var firstLoaded = document.querySelector('.page img[data-loaded="1"]');
+    if (!firstLoaded) return setZoom(1);
+
+    var doFit = function () {
+      var w = firstLoaded.naturalWidth || firstLoaded.getBoundingClientRect().width;
+      if (!w) return setZoom(1);
+      setZoom(document.getElementById("pages").clientWidth / w);
+    };
+
+    if (firstLoaded.complete && firstLoaded.naturalWidth) {
+      doFit();
+    } else {
+      firstLoaded.addEventListener("load", doFit, { once: true });
+    }
+  };
+
+  document.getElementById("mode").onclick = function () {
+    document.body.classList.toggle("light");
+  };
+
+  go.onchange = function () {
+    var nums = getVisiblePageNumbers();
+    var input = parseInt(go.value || "1", 10);
+    var target = nums[input - 1] || nearestVisiblePage(input);
+    scrollToPage(target);
+  };
+
+  window.addEventListener("keydown", function (e) {
+    var k = e.key || "";
+    if (k === "ArrowLeft") document.getElementById("prev").click();
+    if (k === "ArrowRight") document.getElementById("next").click();
+    if (k === "+") setZoom(zoom + 0.15);
+    if (k === "-") setZoom(zoom - 0.15);
+    if (k.toLowerCase() === "f") document.getElementById("fit").click();
+  });
+
+  (async function init() {
+    setZoom(1);
+
+    var firstPage = document.querySelector('.page[data-page="1"]');
+    var secondPage = document.querySelector('.page[data-page="2"]');
+
+    await loadPage(firstPage);
+    await loadPage(secondPage);
+
+    if (!document.querySelector('.page img[data-loaded="1"]')) {
+      showAlert(
+        "<b>Heads up:</b> Walang mahanap na images.<br>" +
+        "Check mo ang path at filenames:<br>" +
+        "<code>" + DIR + "FFM.jpg</code><br>" +
+        "<code>" + DIR + "cover.jpg</code><br>" +
+        "<code>" + DIR + "FFM_001.jpg</code><br>" +
+        "Case-sensitive ang Netlify."
+      );
+      return;
+    }
+
+    setDisplayedTotal();
+
+    var startP = clamp(parseInt(new URLSearchParams(location.search).get("p") || "1", 10), 1, TOTAL);
+    scrollToPage(startP, false);
+  })();
+
+  document.addEventListener("contextmenu", function (e) {
+    e.preventDefault();
+  }, { capture:true });
+
+  document.addEventListener("dragstart", function (e) {
+    if (e.target && e.target.tagName === "IMG") e.preventDefault();
+  }, { capture:true });
+
+  document.addEventListener("selectstart", function (e) {
+    e.preventDefault();
+  }, { capture:true });
+
+  document.addEventListener("keydown", function (e) {
+    var k = (e.key || "").toLowerCase();
+    if ((e.ctrlKey || e.metaKey) && ["s", "u", "p"].includes(k)) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+    if ((e.ctrlKey || e.metaKey) && e.shiftKey && ["i", "j", "c"].includes(k)) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+  }, true);
+})();
+</script>
 </body>
 </html>
-
